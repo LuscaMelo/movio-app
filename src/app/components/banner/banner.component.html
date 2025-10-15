@@ -1,0 +1,50 @@
+<div class="relative w-full 2xl:h-[800px] h-[680px] overflow-hidden">
+  <div
+    class="relative w-full h-full bg-cover bg-center transition-all duration-500"
+    [style.backgroundImage]="'url(' + banners[activeIndex].image + ')'"
+  >
+    <div class="absolte top-0 left-0 bg-gradient-to-r from-black to-black/40 w-full h-full"></div>
+    <div class="absolute inset-0 flex items-center max-w-[1500px] px-3 mx-auto">
+      <div class="text-white max-w-xl">
+        <h1 class="text-4xl lg:text-6xl font-bold mb-3">
+          {{ banners[activeIndex].title }} ({{ banners[activeIndex].year }})
+        </h1>
+
+        <div class="flex items-center gap-4 mb-5 text-sm lg:text-base">
+          <span class="bg-yellow-500 text-black px-2 py-1 rounded font-semibold">
+            IMDb {{ banners[activeIndex].imdb }}
+          </span>
+          <span>{{ banners[activeIndex].duration }}</span>
+          <span>{{ banners[activeIndex].genre }}</span>
+        </div>
+
+        <p class="mb-6 line-clamp-4">
+          {{ banners[activeIndex].description }}
+        </p>
+
+        <div class="flex gap-4">
+          <button type="button" class="bg-red-600 px-5 py-2 rounded hover:bg-red-700 transition">
+            Play Now
+          </button>
+          <button type="button" class="border border-white px-5 py-2 rounded hover:bg-white hover:text-black transition">
+            Watch Trailer
+          </button>
+          <button type="button" class="border border-white px-5 py-2 rounded hover:bg-white hover:text-black transition">
+            Add Watchlist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pontinhos de navegação -->
+  <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex gap-2">
+    <span
+      *ngFor="let banner of banners; let i = index"
+      (click)="goToBanner(i)"
+      [class.bg-brand]="i === activeIndex"
+      [class.bg-white]="i !== activeIndex"
+      class="w-3 h-3 rounded-full cursor-pointer transition-colors"
+    ></span>
+  </div>
+</div>

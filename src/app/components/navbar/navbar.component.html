@@ -7,7 +7,7 @@
 
         <!-- Navegação desktop -->
         <nav class="flex-1 justify-center hidden lg:flex">
-            <ul class="flex gap-6">
+            <ul class="flex gap-6 text-lg font-semibold">
                 <li class="hover:text-brand duration-300 cursor-pointer">
                     <a href="/">Início</a>
                 </li>
@@ -36,7 +36,7 @@
 
     <!-- Menu mobile -->
     <div class="absolute top-0 left-0 w-full h-[100dvh] bg-zinc-800 shadow-lg transition-all duration-300 lg:hidden" 
-        [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-105vw] pointer-events-none'"
+        [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-150vw] bg-transparent pointer-events-none'"
     >
         <i class="fa-solid fa-xmark absolute right-5 top-7 text-2xl" (click)="toggleMenu()"></i>
         <ul class="p-3 flex flex-col gap-4 pt-[35%] text-2xl text-center">
