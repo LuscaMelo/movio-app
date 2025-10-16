@@ -12,6 +12,7 @@ export interface Movie {
   runtime?: number;
   genre_ids?: number[];
   poster_path: string;
+  average: number
 }
 
 export interface Genre {
@@ -43,6 +44,18 @@ export class TmdbService {
       .set('page', page);
 
     return this.http.get<TMDBResponse>(`${this.apiUrl}/movie/popular`, {
+      params,
+    });
+  }
+
+  // Buscar filmes mais bem avaliados
+  getTopRatedMovies(page: number = 1): Observable<TMDBResponse> {
+    const params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('language', 'pt-BR')
+      .set('page', page);
+
+    return this.http.get<TMDBResponse>(`${this.apiUrl}/movie/top_rated`, {
       params,
     });
   }
@@ -79,16 +92,5 @@ export class TmdbService {
   getMoviesByGenre(genreId: number): Observable<Movie[]> {
     return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&language=en-US`)
       .pipe(map(res => res.results.slice(0, 4))); // pegar apenas 4 para mostrar no card
-  }
-
-  // Pegar todos os gêneros com seus filmes
-  getGenresWithMovies(): Observable<{ genre: Genre, movies: Movie[] }[]> {
-    return this.getGenres().pipe(
-      map(genres => genres.slice(0, 5)), // exemplo: pegar apenas 5 gêneros
-      map(genres => genres.map(genre => ({
-        genre,
-        movies: []
-      }))),
-    );
   }
 }
