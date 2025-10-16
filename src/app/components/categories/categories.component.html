@@ -1,9 +1,4 @@
 <div class="relative max-w-[1500px] px-3 mx-auto py-16">
-
-    <div
-        class="absolute top-0 right-0 w-[40%] h-full bg-gradient-to-r from-transparent to-dark z-[9] pointer-events-none">
-    </div>
-
     <div class="mb-10">
         <h2 class="text-white text-2xl xl:text-3xl font-bold mb-2">Escolha por categoria</h2>
         <p class="text-gray-400">Selecione a categoria e conheça todas as opções de filmes disponíveis.</p>
@@ -18,6 +13,9 @@
 
     <!-- Slider -->
     <div *ngIf="!isLoading" class="relative">
+        <div
+            class="absolute top-0 right-0 w-[40%] h-full bg-gradient-to-r from-transparent to-dark z-[9] pointer-events-none">
+        </div>
         <!-- Container de slides -->
         <div #sliderRef class="flex overflow-x-auto gap-4 scroll-smooth no-scrollbar" (scroll)="onScroll()">
             <div *ngFor="let genre of genres"

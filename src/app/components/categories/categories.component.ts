@@ -23,6 +23,8 @@ export class CategoriesComponent implements OnInit {
 
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLDivElement>;
 
+  private scrollTimeout: any;
+
   constructor(private tmdbService: TmdbService) {}
 
   ngOnInit() {
@@ -41,48 +43,67 @@ export class CategoriesComponent implements OnInit {
   }
 
   private getSlideStep(): number {
-  const slider = this.sliderRef.nativeElement;
-  const slide = slider.querySelector('div');
-  if (!slide) return 320;
+    const slider = this.sliderRef.nativeElement;
+    const slide = slider.querySelector('div');
+    if (!slide) return 320;
 
-  // largura do slide
-  const slideWidth = slide.offsetWidth;
+    const slideWidth = slide.offsetWidth;
+    const sliderStyles = getComputedStyle(slider);
+    const gap = sliderStyles.gap ? parseFloat(sliderStyles.gap) : 16;
 
-  // pega o gap do container via getComputedStyle
-  const sliderStyles = getComputedStyle(slider);
-  const gap = sliderStyles.gap ? parseFloat(sliderStyles.gap) : 16;
+    return slideWidth + gap;
+  }
 
-  return slideWidth + gap;
-}
+  scrollLeft() {
+    const slideStep = this.getSlideStep();
+    const slider = this.sliderRef.nativeElement;
+    slider.scrollBy({
+      left: -slideStep,
+      behavior: 'smooth'
+    });
+  }
 
-scrollLeft() {
-  this.sliderRef.nativeElement.scrollBy({
-    left: -this.getSlideStep(),
-    behavior: 'smooth'
-  });
-}
+  scrollRight() {
+    const slideStep = this.getSlideStep();
+    const slider = this.sliderRef.nativeElement;
+    slider.scrollBy({
+      left: slideStep,
+      behavior: 'smooth'
+    });
+  }
 
-scrollRight() {
-  this.sliderRef.nativeElement.scrollBy({
-    left: this.getSlideStep(),
-    behavior: 'smooth'
-  });
-}
+  isAtStart = true;
+  isAtEnd = false;
 
-isAtStart = true;
-isAtEnd = false;
+  private updateNavigationState() {
+    const slider = this.sliderRef.nativeElement;
+    this.isAtStart = slider.scrollLeft === 0;
+    this.isAtEnd = Math.ceil(slider.scrollLeft + slider.clientWidth) >= slider.scrollWidth;
+  }
 
-private updateNavigationState() {
-  const slider = this.sliderRef.nativeElement;
-  this.isAtStart = slider.scrollLeft === 0;
-  this.isAtEnd = Math.ceil(slider.scrollLeft + slider.clientWidth) >= slider.scrollWidth;
-}
+  onScroll() {
+    this.updateNavigationState();
 
-onScroll() {
-  this.updateNavigationState();
-}
+    // Clear any previously scheduled scroll adjustment
+    clearTimeout(this.scrollTimeout);
 
-ngAfterViewInit() {
-  this.updateNavigationState();
-}
+    // Delay the scroll adjustment until the user finishes scrolling
+    this.scrollTimeout = setTimeout(() => {
+      const slider = this.sliderRef.nativeElement;
+      const slideStep = this.getSlideStep();
+      const currentPosition = slider.scrollLeft;
+
+      // Calcular a posição mais próxima do múltiplo do tamanho do slide
+      const nearestSlidePosition = Math.round(currentPosition / slideStep) * slideStep;
+
+      // Ajuste de scroll se necessário
+      if (currentPosition !== nearestSlidePosition) {
+        slider.scrollLeft = nearestSlidePosition;
+      }
+    }, 150); // Ajuste o tempo conforme necessário
+  }
+
+  ngAfterViewInit() {
+    this.updateNavigationState();
+  }
 }
