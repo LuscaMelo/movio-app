@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Movie {
   backdrop_path: string | null;
@@ -10,6 +11,12 @@ export interface Movie {
   overview: string;
   runtime?: number;
   genre_ids?: number[];
+  poster_path: string;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }
 
 export interface TMDBResponse {
@@ -60,5 +67,28 @@ export class TmdbService {
     return this.http.get<TMDBResponse>(`${this.apiUrl}/search/movie`, {
       params,
     });
+  }
+
+  // Pegar lista de gêneros
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<{ genres: Genre[] }>(`${this.apiUrl}/genre/movie/list?api_key=${this.apiKey}&language=en-US`)
+      .pipe(map(res => res.genres));
+  }
+
+  // Pegar filmes por gênero
+  getMoviesByGenre(genreId: number): Observable<Movie[]> {
+    return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&language=en-US`)
+      .pipe(map(res => res.results.slice(0, 4))); // pegar apenas 4 para mostrar no card
+  }
+
+  // Pegar todos os gêneros com seus filmes
+  getGenresWithMovies(): Observable<{ genre: Genre, movies: Movie[] }[]> {
+    return this.getGenres().pipe(
+      map(genres => genres.slice(0, 5)), // exemplo: pegar apenas 5 gêneros
+      map(genres => genres.map(genre => ({
+        genre,
+        movies: []
+      }))),
+    );
   }
 }
