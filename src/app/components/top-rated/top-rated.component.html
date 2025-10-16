@@ -1,5 +1,57 @@
 <div class="relative w-full min-h-screen overflow-auto bg-black text-white">
 
+    <!-- Skeleton (exibido enquanto os dados ainda estão carregando) -->
+    <div *ngIf="!banners.length" class="relative w-full min-h-screen overflow-auto bg-black text-white">
+        <!-- Fundo animado -->
+        <div
+            class="absolute inset-0 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
+        </div>
+
+        <!-- Conteúdo do skeleton -->
+        <div class="relative z-20 pt-[100px] max-w-[1500px] px-3 mx-auto pb-20">
+            <div class="w-full flex flex-col xl:flex-row justify-between gap-20 2xl:gap-32">
+                <!-- Texto -->
+                <div class="w-full xl:w-1/2 max-w-xl space-y-5">
+                    <!-- Título da seção -->
+                    <div class="space-y-2">
+                        <div class="h-10 bg-zinc-700 rounded w-3/4"></div>
+                        <div class="h-4 bg-zinc-700 rounded w-1/2"></div>
+                    </div>
+
+                    <!-- Título do filme -->
+                    <div class="h-10 sm:h-14 bg-zinc-700 rounded w-5/6"></div>
+
+                    <!-- Infos (nota, duração, gênero) -->
+                    <div class="flex gap-4">
+                        <div class="h-6 bg-zinc-700 rounded w-16"></div>
+                        <div class="h-6 bg-zinc-700 rounded w-12"></div>
+                        <div class="h-6 bg-zinc-700 rounded w-24"></div>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div class="space-y-2">
+                        <div class="h-4 bg-zinc-700 rounded w-full"></div>
+                        <div class="h-4 bg-zinc-700 rounded w-5/6"></div>
+                        <div class="h-4 bg-zinc-700 rounded w-2/3"></div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <div class="h-10 bg-zinc-700 rounded w-32"></div>
+                        <div class="h-10 bg-zinc-700 rounded w-44"></div>
+                    </div>
+                </div>
+
+                <!-- Posters -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-3 gap-4 w-full xl:w-1/2">
+                    <div *ngFor="let n of [1, 2, 3, 4, 5, 6]">
+                        <div class="aspect-[2/3] bg-zinc-700 rounded-lg shadow-md animate-pulse w-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Duas imagens sobrepostas para o banner -->
     <img *ngIf="banners.length > 0" [src]="images[0]" alt="{{ banners[activeIndex].title }}"
         class="w-full h-full object-cover absolute top-0 left-0 z-0 transition-opacity duration-700"
@@ -11,15 +63,16 @@
         [class.opacity-100]="visibleImageIndex === 1 && imageLoaded[1]"
         [class.opacity-0]="!(visibleImageIndex === 1 && imageLoaded[1])" (load)="onImageLoad(1)" />
 
-    <!-- Overlay -->
-    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black/40 z-10 pointer-events-none">
+    <!-- Overlay (visível somente quando a imagem atual estiver carregada) -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black/40 z-10 pointer-events-none transition-opacity duration-700"
+        [class.opacity-0]="!imageLoaded[visibleImageIndex]" [class.opacity-100]="imageLoaded[visibleImageIndex]">
     </div>
 
     <!-- Conteúdo -->
     <div *ngIf="banners.length > 0" class="relative z-20 pt-[100px] max-w-[1500px] px-3 mx-auto pb-20">
         <div class="w-full flex flex-col xl:flex-row justify-between gap-20 2xl:gap-32">
             <!-- Texto -->
-            <div class="w-full xl:w-1/2">
+            <div class="w-full xl:w-1/2 max-w-xl">
                 <div class="mb-10 sm:mb-16">
                     <h2 class="text-2xl sm:text-4xl xl:text-5xl font-bold mb-2">Mais bem avaliados</h2>
                     <p class="text-base sm:text-lg">Os filmes com melhor avaliação geral, escolhidos pelo público.</p>
@@ -56,7 +109,7 @@
             </div>
 
             <!-- Posters -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full xl:w-1/2">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-3 gap-4 w-full xl:w-1/2">
                 <div *ngFor="let banner of banners; let i = index">
                     <img [src]="banner.poster" [alt]="banner.title" (click)="setActiveIndex(i)" [ngClass]="{
         'shadow-[0_0_0_1px_rgba(255,255,255,1)]': i === activeIndex
