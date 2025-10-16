@@ -1,68 +1,96 @@
 <div class="relative w-full 2xl:h-[800px] md:h-[680px] h-screen overflow-hidden">
-  <div
-    class="relative w-full h-full bg-cover bg-center transition-all duration-500"
-    [style.background-image]="'url(' + banners[activeIndex].image + ')'">
-    <div class="absolute top-0 left-0 bg-[#000000ad] lg:bg-gradient-to-r from-black to-black/40 w-full h-full"></div>
+  <!-- Skeleton -->
+  <div *ngIf="!imageLoaded" class="absolute inset-0 bg-zinc-900 overflow-hidden">
+    <div
+      class="absolute inset-0 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
+    </div>
+
     <div class="absolute inset-0 flex items-end mb-[120px] 2xl:mb-[200px] max-w-[1500px] px-3 mx-auto">
-      <div class="text-white max-w-xl">
-        <h1 class="text-2xl md:text-4xl lg:text-6xl font-bold mb-3">
-          {{ banners[activeIndex].title }} ({{ banners[activeIndex].year }})
-        </h1>
-
-        <div class="flex items-center gap-4 mb-5 text-sm lg:text-base">
-          <span class="bg-yellow-500 text-black px-2 py-1 rounded font-semibold">
-            IMDb {{ banners[activeIndex].imdb }}
-          </span>
-          <span>{{ banners[activeIndex].duration }}</span>
-          <span>{{ banners[activeIndex].genre }}</span>
+      <div class="w-full max-w-xl space-y-4">
+        <div class="h-10 md:h-14 lg:h-20 bg-zinc-700 rounded w-3/4"></div>
+        <div class="flex gap-3">
+          <div class="h-6 bg-zinc-700 rounded w-20"></div>
+          <div class="h-6 bg-zinc-700 rounded w-16"></div>
+          <div class="h-6 bg-zinc-700 rounded w-24"></div>
         </div>
-
-        <p class="mb-6 line-clamp-4">
-          {{ banners[activeIndex].description }}
-        </p>
-
-        <div class="flex flex-wrap gap-3 lg:gap-4">
-          <button type="button" class="bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
-            Assistir agora
-          </button>
-          <button type="button" class="border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
-            Ver trailer
-          </button>
-          <button type="button" class="flex gap-2 items-center border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
-            <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer"></i> Adicionar aos favoritos
-          </button>
+        <div class="space-y-2">
+          <div class="h-4 bg-zinc-700 rounded w-full"></div>
+          <div class="h-4 bg-zinc-700 rounded w-5/6"></div>
+          <div class="h-4 bg-zinc-700 rounded w-4/6"></div>
+        </div>
+        <div class="flex gap-4 mt-5">
+          <div class="h-10 bg-zinc-700 rounded w-32"></div>
+          <div class="h-10 bg-zinc-700 rounded w-28"></div>
+          <div class="h-10 bg-zinc-700 rounded w-44"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Setas de navegação -->
-<!-- Setas de navegação -->
-<div class="absolute bottom-5 left-0 w-full flex justify-center">
-  <div class="flex gap-2 max-w-[1500px] px-3 w-full justify-start">
-    <!-- Seta anterior -->
-    <button type="button"
-      (click)="prevBanner()"
-      aria-label="Banner anterior"
-      class="bg-white/5 hover:bg-white/30 text-white p-2 rounded-full transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
+  <!-- Background -->
+  <img *ngIf="banners.length > 0" [src]="banners[activeIndex].image" alt="{{ banners[activeIndex].title }}"
+    class="w-full h-full object-cover opacity-0 transition-opacity duration-700" [class.opacity-100]="imageLoaded"
+    (load)="onImageLoad()" />
 
-    <!-- Seta próxima -->
-    <button type="button"
-      (click)="nextBanner()"
-      aria-label="Próximo banner"
-      class="bg-white/5 hover:bg-white/30 text-white p-2 rounded-full transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
+  <!-- Overlay -->
+  <div
+    class="absolute top-0 left-0 w-full h-full transition-opacity duration-700 bg-gradient-to-r from-black to-black/40"
+    [class.opacity-0]="!imageLoaded" [class.opacity-100]="imageLoaded"></div>
+
+  <!-- Conteúdo do Banner -->
+  <div *ngIf="banners.length > 0 && imageLoaded"
+    class="absolute inset-0 flex items-end mb-[120px] 2xl:mb-[200px] max-w-[1500px] px-3 mx-auto transition-opacity duration-700">
+    <div class="text-white max-w-xl">
+      <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-3">
+        {{ banners[activeIndex].title }} ({{ banners[activeIndex].year }})
+      </h1>
+
+      <div class="flex items-center gap-4 mb-5 text-sm lg:text-base">
+        <span class="bg-yellow-500 text-black px-2 py-1 rounded font-semibold">
+          IMDb {{ banners[activeIndex].imdb }}
+        </span>
+        <span>{{ banners[activeIndex].duration }}</span>
+        <span>{{ banners[activeIndex].genre }}</span>
+      </div>
+
+      <p class="mb-6 line-clamp-4">
+        {{ banners[activeIndex].description }}
+      </p>
+
+      <div class="flex flex-wrap gap-3 lg:gap-4">
+        <button type="button" class="bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
+          Assistir agora
+        </button>
+        <button type="button"
+          class="border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
+          Ver trailer
+        </button>
+        <button type="button"
+          class="flex gap-2 items-center border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
+          <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer"></i> Adicionar aos favoritos
+        </button>
+      </div>
+    </div>
   </div>
-</div>
 
-
+  <!-- Navegação -->
+  <div class="absolute bottom-5 w-full flex justify-center transition-opacity duration-700"
+    [class.opacity-0]="!imageLoaded" [class.opacity-100]="imageLoaded">
+    <div class="flex justify-start lg:justify-end gap-2 max-w-[1500px] px-3 w-full">
+      <button (click)="prevBanner()"
+        class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button (click)="nextBanner()"
+        class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>

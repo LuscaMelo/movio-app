@@ -15,13 +15,15 @@ interface Banner {
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [CommonModule], // <-- Importante para ngFor, ngIf, ngClass
+  imports: [CommonModule],
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],
 })
 export class BannerComponent implements OnInit {
   banners: Banner[] = [];
   activeIndex = 0;
+  loading = true;
+  imageLoaded = false;
   private autoplayInterval!: any;
 
   constructor(private tmdb: TmdbService) {}
@@ -40,69 +42,73 @@ export class BannerComponent implements OnInit {
         genre: movie.genre_ids?.map((id) => this.mapGenre(id)).join(', ') || '',
       }));
 
+      this.loading = false;
+
       if (this.banners.length > 0) {
         this.startAutoplay();
       }
     });
   }
 
-  setActiveIndex(index: number) {
-    this.activeIndex = index;
-    this.restartAutoplay();
+  onImageLoad() {
+    this.imageLoaded = true;
   }
 
   private startAutoplay() {
-    this.autoplayInterval = setInterval(() => {
-      this.activeIndex = (this.activeIndex + 1) % this.banners.length;
-    }, 15000);
-  }
+  this.autoplayInterval = setInterval(() => {
+    this.imageLoaded = false; // reset antes de trocar
+    this.activeIndex = (this.activeIndex + 1) % this.banners.length;
+  }, 15000);
+}
 
   private restartAutoplay() {
     clearInterval(this.autoplayInterval);
     this.startAutoplay();
   }
 
-  private mapGenre(id: number): string {
-    const genres: Record<number, string> = {
-      28: 'Action',
-      12: 'Adventure',
-      16: 'Animation',
-      35: 'Comedy',
-      80: 'Crime',
-      99: 'Documentary',
-      18: 'Drama',
-      10751: 'Family',
-      14: 'Fantasy',
-      36: 'History',
-      27: 'Horror',
-      10402: 'Music',
-      9648: 'Mystery',
-      10749: 'Romance',
-      878: 'Sci-Fi',
-      10770: 'TV Movie',
-      53: 'Thriller',
-      10752: 'War',
-      37: 'Western',
-    };
-    return genres[id] || 'Unknown';
-  }
-
   prevBanner() {
-    if (this.banners.length === 0) return;
+  if (this.banners.length === 0) return;
 
-    this.activeIndex =
-      (this.activeIndex - 1 + this.banners.length) % this.banners.length;
-    this.restartAutoplay();
-  }
+  this.imageLoaded = false; // <-- resetar antes de trocar
+  this.activeIndex =
+    (this.activeIndex - 1 + this.banners.length) % this.banners.length;
+  this.restartAutoplay();
+}
 
-  nextBanner() {
-    if (this.banners.length === 0) return;
+nextBanner() {
+  if (this.banners.length === 0) return;
 
-    this.activeIndex = (this.activeIndex + 1) % this.banners.length;
-    this.restartAutoplay();
-  }
+  this.imageLoaded = false; // <-- resetar antes de trocar
+  this.activeIndex = (this.activeIndex + 1) % this.banners.length;
+  this.restartAutoplay();
+}
 
   ngOnDestroy(): void {
     clearInterval(this.autoplayInterval);
+  }
+
+  private mapGenre(id: number): string {
+    const genres: Record<number, string> = {
+      28: 'Ação',
+      12: 'Aventura',
+      16: 'Animação',
+      35: 'Comédia',
+      80: 'Crime',
+      99: 'Documentário',
+      18: 'Drama',
+      10751: 'Família',
+      14: 'Fantasia',
+      36: 'História',
+      27: 'Terror',
+      10402: 'Música',
+      9648: 'Mistério',
+      10749: 'Romance',
+      878: 'Ficção Científica',
+      10770: 'Filme de TV',
+      53: 'Thriller',
+      10752: 'Guerra',
+      37: 'Faroeste',
+    };
+    return genres[id] || 'Desconhecido';
   }
 }
