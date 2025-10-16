@@ -5,9 +5,9 @@
     </div>
 
     <!-- Skeleton Loader -->
-    <div *ngIf="isLoading" class="flex gap-4 overflow-x-auto">
+    <div *ngIf="isLoading" class="flex gap-4 overflow-x-auto flex-nowrap no-scrollbar px-1">
         <div *ngFor="let sk of skeletons"
-            class="bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 w-[300px] h-[260px] rounded-lg">
+            class="min-w-[300px] h-[260px] rounded-lg shrink-0 bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
         </div>
     </div>
 
