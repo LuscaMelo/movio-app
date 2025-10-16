@@ -1,8 +1,11 @@
-<div class="text-white w-full h-[80px] fixed top-0 left-0 z-50">
+<div class="text-white w-full h-[80px] fixed top-0 left-0 z-50 transition duration-300" [ngClass]="{
+    'bg-transparent': !scrolled,
+    'bg-dark/80  backdrop-blur shadow-xl shadow-[#0000007d]': scrolled
+  }">
     <div class="max-w-[1500px] mx-auto px-3 w-full h-full flex justify-between items-center">
         <!-- Logo -->
         <div class="flex-1">
-                <img class="max-w-[130px]" src="/logo.png" alt="logotipo da Movio">
+            <img class="max-w-[130px]" src="/logo.png" alt="logotipo da Movio">
         </div>
 
         <!-- Navegação desktop -->
@@ -35,9 +38,8 @@
     </div>
 
     <!-- Menu mobile -->
-    <div class="absolute top-0 left-0 w-full h-[100dvh] bg-zinc-800 shadow-lg transition-all duration-300 lg:hidden" 
-        [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-150vw] bg-transparent pointer-events-none'"
-    >
+    <div class="absolute top-0 left-0 w-full h-[100dvh] bg-zinc-800 shadow-lg transition-all duration-300 lg:hidden"
+        [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-150vw] bg-transparent pointer-events-none'">
         <i class="fa-solid fa-xmark absolute right-5 top-7 text-2xl" (click)="toggleMenu()"></i>
         <ul class="p-3 flex flex-col gap-4 pt-[35%] text-2xl text-center">
             <li class="hover:text-brand duration-300 cursor-pointer">
