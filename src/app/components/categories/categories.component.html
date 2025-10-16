@@ -21,7 +21,7 @@
         <!-- Container de slides -->
         <div #sliderRef class="flex overflow-x-auto gap-4 scroll-smooth no-scrollbar" (scroll)="onScroll()">
             <div *ngFor="let genre of genres"
-                class="min-w-[300px] bg-zinc-900 p-2 lg:p-3 rounded-lg cursor-pointer shrink-0 duration-300 hover:brightness-[123%]">
+                class="min-w-[300px] max-w-[150px] bg-zinc-900 p-2 lg:p-3 rounded-lg cursor-pointer shrink-0 duration-300 hover:brightness-[123%]">
                 <div class="grid grid-cols-2 gap-2">
                     <img *ngFor="let movie of genre.movies"
                         [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <!-- Navegação abaixo do slider -->
+        <!-- Navegação -->
         <div class="mt-6 w-full flex justify-center transition-opacity duration-700" [class.opacity-0]="isLoading"
             [class.opacity-100]="!isLoading">
             <div class="flex justify-start gap-2 max-w-[1500px] px-3 w-full">
