@@ -23,6 +23,16 @@ export class MoviesSliderComponent implements OnInit, AfterViewInit {
   isAtStart = true;
   isAtEnd = false;
 
+  activeMovieId: number | null = null;
+
+setActiveMovie(id: number) {
+  this.activeMovieId = id;
+}
+
+clearActiveMovie() {
+  this.activeMovieId = null;
+}
+
   ngOnInit() {}
 
   ngAfterViewInit() {

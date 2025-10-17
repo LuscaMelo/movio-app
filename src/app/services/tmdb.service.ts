@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Movie {
+  id: number;
   backdrop_path: string | null;
   title: string;
   release_date: string;
