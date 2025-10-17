@@ -6,11 +6,12 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { TopRated } from "./components/top-rated/top-rated.component";
 import { MoviesSliderComponent } from "./components/movies-slider/movies-slider.component";
 import { Movie, TmdbService } from './services/tmdb.service';
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, BannerComponent, CategoriesComponent, TopRated, MoviesSliderComponent],
+  imports: [RouterOutlet, NavbarComponent, BannerComponent, CategoriesComponent, TopRated, MoviesSliderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

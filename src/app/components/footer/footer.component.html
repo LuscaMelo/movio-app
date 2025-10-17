@@ -1,0 +1,90 @@
+<footer class="bg-black/40 w-full text-gray-300">
+    <div class="max-w-[1500px] mx-auto px-3 pt-28 pb-28 lg:pb-36 flex flex-col lg:flex-row gap-28 justify-between">
+        <div class="md:flex lg:flex-col gap-20 lg:gap-0">
+            <div class="mb-8">
+                <img class="max-w-[180px]" src="/logo.png" alt="logotipo da Movio">
+            </div>
+            <div>
+                <div class="max-w-[250px]">
+                    <p>Avenida Paulista, 1234, Bela Vista, São Paulo - SP, CEP 01310-000</p>
+                    <p>Brasil</p>
+                </div>
+                <div class="flex gap-6 mt-12">
+                    <div>
+                        <h5 class="text-lg text-white font-semibold">Telefone:</h5>
+                        <p>(11) 91234-5678</p>
+                    </div>
+                    <div>
+                        <h5 class="text-lg text-white font-semibold">Email:</h5>
+                        <p>{{'suporte@movio.com.br'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-20">
+            <div>
+                <h5 class="text-xl font-semibold text-white">Sitemap</h5>
+                <ul class="flex flex-col gap-3 mt-8">
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('home')">
+                        Início
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('categories')">
+                        Categorias
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('top-rated')">
+                        Mais Avaliados
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('now-playing')">
+                        Em Cartaz
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('upcoming')">
+                        Em Breve
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('popular')">
+                        Populares
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('trending')">
+                        Tendências
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-xl font-semibold text-white">Redes sociais</h5>
+                <ul class="flex flex-col gap-3 mt-8">
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Instagram
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Facebook
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Linkedin
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Twitter
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Youtube
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-xl font-semibold text-white">Institucional</h5>
+                <ul class="flex flex-col gap-3 mt-8">
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Sobre a Movio
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Política de privacidade
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        Política de cookies
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center px-3 py-8 bg-black/20">
+        <p class="text-zinc-400 text-sm md:text-md">© Movio 2025 - Todos os direitos reservados</p>
+    </div>
+</footer>
