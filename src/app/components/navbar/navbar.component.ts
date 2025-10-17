@@ -12,9 +12,25 @@ export class NavbarComponent implements OnInit {
   menuOpen = false;
   scrolled = false;
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  scrollToSection(id: string) {
+  const section = document.getElementById(id);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
+  this.menuOpen = false;
+  document.body.classList.remove('no-scroll');
+}
+
+  toggleMenu() {
+  this.menuOpen = !this.menuOpen;
+
+  if (this.menuOpen) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+}
 
   ngOnInit() {
     this.onScroll();
