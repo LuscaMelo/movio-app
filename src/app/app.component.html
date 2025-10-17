@@ -3,7 +3,14 @@
     <app-banner></app-banner>
     <app-categories></app-categories>
     <app-top-rated></app-top-rated>
-    <app-now-playing></app-now-playing>
+    <div class="pb-16">
+        <app-movie-slider [movies]="nowPlaying" [isLoading]="isLoadingNowPlaying" [title]="'Em cartaz agora'"
+            [subtitle]="'Diversão garantida com os filmes que estão bombando nas telonas'"></app-movie-slider>
+        <app-movie-slider [movies]="upcoming" [isLoading]="isLoadingUpcoming" [title]="'Em breve nos cinemas'"
+            [subtitle]="'Descubra os próximos títulos que vão emocionar, surpreender e entreter'"></app-movie-slider>
+        <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular" [title]="'Mais populares'"
+            [subtitle]="'Esses são os títulos mais assistidos e comentados recentemente. Já viu todos?'"></app-movie-slider>
+    </div>
 </main>
 
 
