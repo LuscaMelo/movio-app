@@ -69,7 +69,8 @@
     </div>
 
     <!-- Conteúdo -->
-    <div *ngIf="banners.length > 0" class="relative z-20 pt-[100px] max-w-[1500px] px-3 mx-auto pb-20">
+    <div *ngIf="banners.length > 0"
+        class="relative z-20 pt-[100px] max-w-[1500px] px-3 mx-auto pb-20 lg:pb-16 2xl:pb-0">
         <div class="w-full flex flex-col xl:flex-row justify-between gap-20 2xl:gap-32">
             <!-- Texto -->
             <div class="w-full xl:w-1/2 max-w-xl">
@@ -113,7 +114,7 @@
                 <div *ngFor="let banner of banners; let i = index">
                     <img [src]="banner.poster" [alt]="banner.title" (click)="setActiveIndex(i)" [ngClass]="{
         'shadow-[0_0_0_1px_rgba(255,255,255,1)]': i === activeIndex
-      }" class="rounded-lg w-full object-cover shadow-md hover:brightness-[83%] cursor-pointer transition-all duration-300" />
+      }" class="rounded-lg w-full object-cover object-center shadow-md hover:brightness-[83%] cursor-pointer transition-all duration-300" />
                 </div>
             </div>
 

@@ -43,34 +43,54 @@ export class CategoriesComponent implements OnInit {
   }
 
   private getSlideStep(): number {
-    const slider = this.sliderRef.nativeElement;
-    const slide = slider.querySelector('div');
-    if (!slide) return 320;
+  const slider = this.sliderRef.nativeElement;
+  const slide = slider.querySelector('div');
 
-    const slideWidth = slide.offsetWidth;
-    const sliderStyles = getComputedStyle(slider);
-    const gap = sliderStyles.gap ? parseFloat(sliderStyles.gap) : 16;
+  if (!slide) return 320;
 
-    return slideWidth + gap;
-  }
+  const slideWidth = slide.getBoundingClientRect().width;
+  const sliderStyles = window.getComputedStyle(slider);
+  const gap = parseFloat(sliderStyles.columnGap || sliderStyles.gap || '16');
+
+  return slideWidth + gap;
+}
 
   scrollLeft() {
-    const slideStep = this.getSlideStep();
-    const slider = this.sliderRef.nativeElement;
+  const slideStep = this.getSlideStep();
+  const slider = this.sliderRef.nativeElement;
+
+  if (slider.scrollLeft <= slideStep) {
+    slider.scrollTo({
+      left: 0,
+      behavior: 'smooth'
+    });
+  } else {
     slider.scrollBy({
       left: -slideStep,
       behavior: 'smooth'
     });
   }
+}
+
 
   scrollRight() {
-    const slideStep = this.getSlideStep();
-    const slider = this.sliderRef.nativeElement;
+  const slideStep = this.getSlideStep();
+  const slider = this.sliderRef.nativeElement;
+
+  const remainingScroll = slider.scrollWidth - slider.clientWidth - slider.scrollLeft;
+
+  if (remainingScroll <= slideStep) {
+    slider.scrollTo({
+      left: slider.scrollWidth - slider.clientWidth,
+      behavior: 'smooth'
+    });
+  } else {
     slider.scrollBy({
       left: slideStep,
       behavior: 'smooth'
     });
   }
+}
 
   isAtStart = true;
   isAtEnd = false;
@@ -89,18 +109,21 @@ export class CategoriesComponent implements OnInit {
 
     // Delay the scroll adjustment until the user finishes scrolling
     this.scrollTimeout = setTimeout(() => {
-      const slider = this.sliderRef.nativeElement;
-      const slideStep = this.getSlideStep();
-      const currentPosition = slider.scrollLeft;
+  const slider = this.sliderRef.nativeElement;
+  const slideStep = this.getSlideStep();
+  const currentPosition = slider.scrollLeft;
 
-      // Calcular a posição mais próxima do múltiplo do tamanho do slide
-      const nearestSlidePosition = Math.round(currentPosition / slideStep) * slideStep;
+  const maxScroll = slider.scrollWidth - slider.clientWidth;
 
-      // Ajuste de scroll se necessário
-      if (currentPosition !== nearestSlidePosition) {
-        slider.scrollLeft = nearestSlidePosition;
-      }
-    }, 150); // Ajuste o tempo conforme necessário
+  // Só aplica se ainda não estiver no final
+  if (currentPosition + slideStep < maxScroll) {
+    const nearestSlidePosition = Math.round(currentPosition / slideStep) * slideStep;
+
+    if (currentPosition !== nearestSlidePosition) {
+      slider.scrollLeft = nearestSlidePosition;
+    }
+  }
+}, 150);
   }
 
   ngAfterViewInit() {
