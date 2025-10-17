@@ -60,6 +60,18 @@ export class TmdbService {
     });
   }
 
+  // Buscar filmes em cartaz
+  getNowPlayingMovies(page: number = 1): Observable<TMDBResponse> {
+    const params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('language', 'pt-BR')
+      .set('page', page);
+
+    return this.http.get<TMDBResponse>(`${this.apiUrl}/movie/now_playing`, {
+      params,
+    });
+  }
+
   // Buscar detalhes de um filme específico
   getMovieDetails(movieId: number): Observable<Movie> {
     const params = new HttpParams()

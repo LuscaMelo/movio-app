@@ -4,11 +4,12 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { BannerComponent } from "./components/banner/banner.component";
 import { CategoriesComponent } from './components/categories/categories.component';
 import { TopRated } from "./components/top-rated/top-rated.component";
+import { NowPlayingComponent } from "./components/now-playing/now-playing.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, BannerComponent, CategoriesComponent, TopRated],
+  imports: [RouterOutlet, NavbarComponent, BannerComponent, CategoriesComponent, TopRated, NowPlayingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

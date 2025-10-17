@@ -1,13 +1,13 @@
 <div class="relative max-w-[1500px] px-3 mx-auto py-16">
     <div class="mb-10 text-white border-l-4 border-brand px-3">
-        <h2 class="text-2xl xl:text-3xl font-bold mb-2">Escolha por categoria</h2>
-        <p class="text-base lg:text-lg">Explore os gêneros e descubra filmes perfeitos para o seu momento</p>
+        <h2 class="text-2xl xl:text-3xl font-bold mb-2">Em cartaz agora</h2>
+        <p class="text-base lg:text-lg">Diversão garantida com os filmes que estão bombando nas telonas</p>
     </div>
 
     <!-- Skeleton Loader -->
     <div *ngIf="isLoading" class="flex gap-4 overflow-x-auto flex-nowrap no-scrollbar px-1">
         <div *ngFor="let sk of skeletons"
-            class="min-w-[300px] h-[260px] rounded-lg shrink-0 bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
+            class="min-w-[220px] xl:min-w-[250px] h-[300px] lg:h-[380px] rounded-lg shrink-0 bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
         </div>
     </div>
 
@@ -27,19 +27,27 @@
         <div #sliderRef
             class="flex overflow-x-auto gap-4 scroll-smooth no-scrollbar snap-x snap-mandatory pr-10 lg:pr-0"
             (scroll)="onScroll()">
-            <div *ngFor="let genre of genres"
-                class="snap-start min-w-[300px] max-w-[150px] bg-zinc-900 p-2 lg:p-3 rounded-lg cursor-pointer shrink-0 duration-300 hover:brightness-[123%]">
-                <div class="grid grid-cols-2 gap-2">
-                    <img *ngFor="let movie of genre.movies"
-                        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-                        class="w-full h-[120px] lg:h-[160px] object-cover rounded" />
+
+            <div *ngFor="let movie of movies"
+                class="relative snap-start min-w-[220px] xl:min-w-[250px] max-w-[180px] rounded-lg overflow-hidden cursor-pointer shrink-0 duration-300 hover:brightness-[108%] group">
+
+                <!-- Imagem do filme -->
+                <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title"
+                    class="w-full h-auto block group-hover:scale-[102%] duration-500">
+
+                <!-- Overlay com gradiente + botão -->
+                <div
+                    class="absolute inset-0 flex items-end justify-center transition-all duration-300 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 bg-gradient-to-t from-black/80 to-transparent">
+                    <button
+                        class="bg-brand px-4 py-2 m-4 w-full rounded-md hover:bg-red-700 transition text-sm sm:text-base text-white">
+                        Ver detalhes
+                    </button>
                 </div>
-                <div class="flex items-center justify-between mt-4 px-2 text-zinc-300">
-                    <h3 class="font-semibold text-lg">{{ genre.name }}</h3>
-                    <i class="fa-solid fa-arrow-right-long text-xl text-zinc-500"></i>
-                </div>
+
             </div>
         </div>
+
+
 
     </div>
     <!-- Navegação -->
