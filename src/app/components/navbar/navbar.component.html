@@ -1,6 +1,6 @@
 <div class="text-white w-full h-[80px] fixed top-0 left-0 z-50 transition duration-300" [ngClass]="{
     'bg-transparent': !scrolled,
-    'bg-dark/80  backdrop-blur shadow-xl shadow-[#0000007d]': scrolled
+    'bg-dark/90 shadow-xl shadow-[#0000007d] backdrop-blur-[4px]': scrolled
   }">
     <div class="max-w-[1500px] mx-auto px-3 w-full h-full flex justify-between items-center">
         <!-- Logo -->
@@ -51,10 +51,17 @@
         </div>
     </div>
 
+    <!-- Overlay -->
+    <div class="fixed top-0 left-0 h-[110dvh] w-full bg-black/75 transition-all duration-500 z-60 lg:hidden"
+        [ngClass]="menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" (click)="toggleMenu()"></div>
+
     <!-- Menu mobile -->
-    <div class="absolute top-0 left-0 w-full h-[110dvh] bg-dark shadow-lg transition-all duration-300 lg:hidden z-40"
+    <div class="absolute top-0 right-0 w-full md:w-[65%] h-[110dvh] bg-dark shadow-lg transition-all duration-300 lg:hidden z-40"
         [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-150vw] bg-transparent pointer-events-none'">
-        <i class="fa-solid fa-xmark absolute right-5 top-7 text-2xl" (click)="toggleMenu()"></i>
+
+        <!-- Botão de fechar o menu -->
+        <i class="fa-solid fa-xmark absolute right-5 top-7 text-2xl cursor-pointer" (click)="toggleMenu()"></i>
+
         <ul class="p-3 flex flex-col gap-4 text-2xl items-center justify-center h-[80%]">
             <!-- Logo -->
             <div class="mb-10">
