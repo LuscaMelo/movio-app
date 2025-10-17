@@ -20,10 +20,12 @@ export class AppComponent {
   nowPlaying: Movie[] = [];
   popular: Movie[] = [];
   upcoming: Movie[] = [];
+  trending: Movie[] = [];
 
   isLoadingNowPlaying = true;
   isLoadingPopular = true;
   isLoadingUpcoming = true;
+  isLoadingTrending = true;
 
   constructor(private tmdbService: TmdbService) {}
 
@@ -41,6 +43,11 @@ export class AppComponent {
     this.tmdbService.getUpcomingMovies().subscribe(res => {
       this.upcoming = res.results;
       this.isLoadingUpcoming = false;
+    });
+
+    this.tmdbService.getTrendingMovies().subscribe(res => {
+      this.trending = res.results;
+      this.isLoadingTrending = false;
     });
   }
 }

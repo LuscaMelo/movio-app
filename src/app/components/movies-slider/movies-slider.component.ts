@@ -17,7 +17,7 @@ export class MoviesSliderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLDivElement>;
 
-  skeletons = Array(5);
+  skeletons = Array(6);
   private scrollTimeout: any;
 
   isAtStart = true;
