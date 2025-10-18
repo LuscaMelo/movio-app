@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService, Movie } from '../../services/tmdb.service';
 import { forkJoin } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 interface GenreWithMovies {
   id: number;
@@ -12,7 +13,7 @@ interface GenreWithMovies {
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })

@@ -11,28 +11,14 @@
         <!-- Navegação desktop -->
         <nav class="flex-1 justify-center hidden lg:flex">
             <ul class="flex gap-6 text-md font-semibold">
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('home')">
-                    Início
+                <li class="hover:text-brand duration-300 cursor-pointer">
+                    <a routerLink="/">Início</a>
                 </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('categories')">
-                    Categorias
-                </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('top-rated')">
-                    Mais Avaliados
-                </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('now-playing')">
-                    Em Cartaz
-                </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('upcoming')">
-                    Em Breve
-                </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('popular')">
-                    Populares
-                </li>
-                <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('trending')">
-                    Tendências
+                <li class="hover:text-brand duration-300 cursor-pointer">
+                    <a routerLink="/categorias">Categorias</a>
                 </li>
             </ul>
+
         </nav>
 
         <div class="flex items-center gap-4">
@@ -68,27 +54,14 @@
                 <img class="max-w-[130px]" src="/logo.png" alt="logotipo da Movio">
             </div>
 
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('home')">
-                Início
+
+            <li class="hover:text-brand duration-300 cursor-pointer">
+                <a routerLink="/">Início</a>
             </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('categories')">
-                Categorias
+            <li class="hover:text-brand duration-300 cursor-pointer">
+                <a routerLink="/categorias">Categorias</a>
             </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('top-rated')">
-                Mais Avaliados
-            </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('now-playing')">
-                Em Cartaz
-            </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('upcoming')">
-                Em Breve
-            </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('popular')">
-                Populares
-            </li>
-            <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('trending')">
-                Tendências
-            </li>
+
         </ul>
     </div>
 </div>

@@ -25,26 +25,11 @@
             <div>
                 <h5 class="text-xl font-semibold text-white">Sitemap</h5>
                 <ul class="flex flex-col gap-3 mt-8">
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('home')">
-                        Início
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/">Início</a>
                     </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('categories')">
-                        Categorias
-                    </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('top-rated')">
-                        Mais Avaliados
-                    </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('now-playing')">
-                        Em Cartaz
-                    </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('upcoming')">
-                        Em Breve
-                    </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('popular')">
-                        Populares
-                    </li>
-                    <li class="hover:text-brand duration-300 cursor-pointer" (click)="scrollToSection('trending')">
-                        Tendências
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/categorias">Categorias</a>
                     </li>
                 </ul>
             </div>

@@ -1,25 +1,25 @@
-<main class="bg-dark min-h-[100vh]" id="home">
+<main class="bg-dark min-h-[100vh]">
     <app-banner></app-banner>
-    <div class="scroll-mt-[80px]" id="categories">
+    <div>
         <app-categories></app-categories>
     </div>
-    <div class="scroll-mt-[80px]" id="top-rated">
+    <div>
         <app-top-rated></app-top-rated>
     </div>
     <div class="pb-16">
-        <div class="scroll-mt-[60px] lg:scroll-mt-[80px]" id="now-playing">
+        <div>
             <app-movie-slider [movies]="nowPlaying" [isLoading]="isLoadingNowPlaying" [title]="'Em cartaz agora'"
                 [subtitle]="'Diversão garantida com os filmes que estão bombando nas telonas'"></app-movie-slider>
         </div>
-        <div class="scroll-mt-[60px] lg:scroll-mt-[80px]" id="upcoming">
+        <div>
             <app-movie-slider [movies]="upcoming" [isLoading]="isLoadingUpcoming" [title]="'Em breve nos cinemas'"
                 [subtitle]="'Descubra os próximos títulos que vão emocionar, surpreender e entreter'"></app-movie-slider>
         </div>
-        <div class="scroll-mt-[60px] lg:scroll-mt-[80px]" id="popular">
+        <div>
             <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular" [title]="'Mais populares'"
                 [subtitle]="'Esses são os títulos mais assistidos e comentados recentemente. Já viu todos?'"></app-movie-slider>
         </div>
-        <div class="scroll-mt-[60px] lg:scroll-mt-[80px]" id="trending">
+        <div>
             <app-movie-slider [movies]="trending" [isLoading]="isLoadingTrending" [title]="'Tendência da semana'"
                 [subtitle]="'Os filmes que estão em alta no momento, segundo os fãs e a crítica'"></app-movie-slider>
         </div>
