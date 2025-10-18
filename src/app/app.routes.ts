@@ -4,11 +4,13 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 
 export const routes: Routes = [
     {
-        path: '',
-        component: HomeComponent
-    },
-    {
-        path: 'categorias',
-        component: CategoriesComponent
-    }
+    path: '',
+    component: HomeComponent,
+    data: { breadcrumb: 'Início' },
+  },
+  {
+    path: 'categorias',
+    component: CategoriesComponent,
+    data: { breadcrumb: 'Categorias' },
+  },
 ];
