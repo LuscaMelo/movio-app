@@ -19,6 +19,7 @@ export interface Movie {
 export interface Genre {
   id: number;
   name: string;
+  background: string;
 }
 
 export interface TMDBResponse {
@@ -121,13 +122,23 @@ export class TmdbService {
 
   // Pegar lista de gêneros
   getGenres(): Observable<Genre[]> {
-    return this.http.get<{ genres: Genre[] }>(`${this.apiUrl}/genre/movie/list?api_key=${this.apiKey}&language=en-US`)
-      .pipe(map(res => res.genres));
-  }
+  const params = new HttpParams()
+    .set('api_key', this.apiKey)
+    .set('language', 'pt-BR');
+
+  return this.http.get<{ genres: Genre[] }>(`${this.apiUrl}/genre/movie/list`, { params })
+    .pipe(map(res => res.genres));
+}
 
   // Pegar filmes por gênero
   getMoviesByGenre(genreId: number): Observable<Movie[]> {
-    return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&language=en-US`)
-      .pipe(map(res => res.results.slice(0, 4))); // pegar apenas 4 para mostrar no card
+    const params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('with_genres', genreId)
+      .set('language', 'pt-BR')
+      .set('page', '1');
+
+    return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie`, { params })
+      .pipe(map(res => res.results.slice(0, 4))); // pega até 4 filmes
   }
 }

@@ -1,4 +1,36 @@
 <main class="bg-dark min-h-[100vh]" id="home">
     <app-page-header [banner]="banner"></app-page-header>
     <app-breadcrumb></app-breadcrumb>
+
+    <div class="py-14 lg:py-20">
+        <section class="max-w-[1500px] mx-auto px-3">
+            <div class="mb-10 text-white border-l-4 border-brand px-3">
+                <h2 class="text-2xl xl:text-3xl font-bold mb-2">Selecione a categoria desejada</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
+                @if (isLoadingGenres) {
+                @for (i of skeletons; track i) {
+                <div
+                    class="h-[100px] rounded-lg bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 animate-shimmer">
+                </div>
+                }
+                } @else {
+                @for (card of genreCards(); track card.genre.id) {
+                <div class="relative rounded-lg shadow-lg h-[100px] flex items-center justify-center text-white font-bold text-2xl text-center bg-zinc-800 overflow-hidden cursor-pointer hover:brightness-[123%] duration-300"
+                    [style.backgroundImage]="'url(' + card.backgroundImage + ')'"
+                    style="background-size: cover; background-position: center;">
+                    <div class="bg-black bg-opacity-50 w-full h-full flex items-center justify-center rounded-lg">
+                        {{ card.genre.name }}
+                    </div>
+                </div>
+                }
+                }
+            </div>
+        </section>
+
+        <div class="mt-8">
+            <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular" [title]="'Sugestões para você'"
+                [subtitle]="'Aproveite os melhores títulos recomendados'"></app-movie-slider>
+        </div>
+    </div>
 </main>

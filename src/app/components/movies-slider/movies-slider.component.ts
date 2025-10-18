@@ -36,8 +36,10 @@ clearActiveMovie() {
   ngOnInit() {}
 
   ngAfterViewInit() {
+  setTimeout(() => {
     this.updateNavigationState();
-  }
+  }, 100);
+}
 
   scrollLeft() {
     const slideStep = this.getSlideStep();
