@@ -29,15 +29,17 @@
             (scroll)="onScroll()">
             <div *ngFor="let genre of genres"
                 class="snap-start min-w-[300px] max-w-[150px] bg-zinc-900 p-2 lg:p-3 rounded-lg cursor-pointer shrink-0 duration-300 hover:brightness-[123%]">
-                <div class="grid grid-cols-2 gap-2">
-                    <img *ngFor="let movie of genre.movies"
-                        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-                        class="w-full h-[120px] lg:h-[160px] object-cover rounded" />
-                </div>
-                <div class="flex items-center justify-between mt-4 px-2 text-zinc-300">
-                    <h3 class="font-semibold text-lg">{{ genre.name }}</h3>
-                    <i class="fa-solid fa-arrow-right-long text-xl text-zinc-500"></i>
-                </div>
+                <a href="/categorias">
+                    <div class="grid grid-cols-2 gap-2">
+                        <img *ngFor="let movie of genre.movies"
+                            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                            class="w-full h-[120px] lg:h-[160px] object-cover rounded" />
+                    </div>
+                    <div class="flex items-center justify-between mt-4 px-2 text-zinc-300">
+                        <h3 class="font-semibold text-lg">{{ genre.name }}</h3>
+                        <i class="fa-solid fa-arrow-right-long text-xl text-zinc-500"></i>
+                    </div>
+                </a>
             </div>
         </div>
 
