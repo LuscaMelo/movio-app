@@ -9,7 +9,7 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
                 @if (isLoadingGenres) {
-                @for (i of skeletons; track i) {
+                @for (i of skeletons; track $index) {
                 <div
                     class="h-[100px] rounded-lg bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 animate-shimmer">
                 </div>
