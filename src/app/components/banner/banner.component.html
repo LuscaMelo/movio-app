@@ -40,7 +40,7 @@
   <!-- Conteúdo do Banner -->
   <div *ngIf="banners.length > 0 && imageLoaded"
     class="absolute inset-0 flex items-end mb-[120px] 2xl:mb-[200px] max-w-[1500px] px-3 mx-auto transition-opacity duration-700">
-    <div class="text-white max-w-xl">
+    <div class="text-white max-w-[580px]">
       <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-3">
         {{ banners[activeIndex].title }} ({{ banners[activeIndex].year }})
       </h1>
@@ -58,16 +58,19 @@
       </p>
 
       <div class="flex flex-wrap gap-3 lg:gap-4">
-        <button type="button" class="bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
-          Assistir agora
+        <button type="button"
+          class="flex items-center gap-2 bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
+          <i class="fa-solid fa-eye"></i>
+          Ver detalhes
         </button>
         <button type="button"
-          class="border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
-          Ver trailer
+          class="flex items-center gap-2 border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
+          <i class="fa-solid fa-circle-play"></i>
+          Assistir trailer
         </button>
         <button type="button"
           class="flex gap-2 items-center border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
-          <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer"></i> Adicionar aos favoritos
+          <i class="fa-solid fa-heart"></i> Adicionar aos favoritos
         </button>
       </div>
     </div>
