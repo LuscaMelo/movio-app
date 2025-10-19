@@ -97,6 +97,8 @@ export class CategoriesComponent implements OnInit {
   isAtEnd = false;
 
   private updateNavigationState() {
+    if (!this.sliderRef?.nativeElement) return;
+
     const slider = this.sliderRef.nativeElement;
     this.isAtStart = slider.scrollLeft === 0;
     this.isAtEnd = Math.ceil(slider.scrollLeft + slider.clientWidth) >= slider.scrollWidth;
