@@ -14,13 +14,14 @@
     <!-- Slider -->
     <div *ngIf="!isLoading" class="relative">
         <!-- Gradiente à esquerda -->
-        <div class="absolute top-0 left-0 w-[20%] h-full bg-gradient-to-l from-transparent to-dark/95 z-[9] pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 hidden lg:flex"
-            [class.opacity-100]="!isAtStart">
+        <div class="pointer-events-none absolute top-0 left-0 w-[100px] lg:w-[150px] h-full z-[9] hidden lg:flex"
+            [ngClass]="{ 'bg-gradient-to-l from-transparent to-black/70': !isAtStart }"
+            style="mix-blend-mode: multiply;">
         </div>
 
         <!-- Gradiente à direita -->
-        <div class="absolute top-0 right-0 w-[20%] h-full bg-gradient-to-r from-transparent to-dark/95 z-[9] pointer-events-none transition-opacity duration-500 ease-in-out opacity-0"
-            [class.opacity-100]="!isAtEnd">
+        <div class="pointer-events-none absolute top-0 right-0 w-[100px] lg:w-[150px] h-full z-[9]"
+            [ngClass]="{ 'bg-gradient-to-r from-transparent to-black/70': !isAtEnd }" style="mix-blend-mode: multiply;">
         </div>
 
         <!-- Container de slides -->
@@ -31,6 +32,13 @@
             <div *ngFor="let movie of movies"
                 class="relative snap-start min-w-[220px] xl:min-w-[250px] max-w-[180px] rounded-lg overflow-hidden cursor-pointer shrink-0 duration-300 hover:brightness-[108%] group"
                 (click)="setActiveMovie(movie.id)" [class.active]="activeMovieId === movie.id">
+
+                <!-- Bagde Classificação -->
+                <div
+                    class="absolute top-2 right-2 z-20 flex items-center gap-2 rounded-full py-1 px-3 shadow-xl bg-yellow-500 text-white text-xs font-bold">
+                    <i class="fa-solid fa-star"></i>
+                    <p>{{ movie.vote_average.toFixed(1) }}</p>
+                </div>
 
                 <!-- Imagem do filme -->
                 <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title"
