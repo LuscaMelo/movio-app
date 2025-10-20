@@ -1,8 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TmdbService, Movie } from '../../services/tmdb.service';
 import { forkJoin } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface GenreWithMovies {
   id: number;
@@ -13,7 +12,7 @@ interface GenreWithMovies {
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [ RouterModule],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
@@ -26,11 +25,11 @@ export class CategoriesComponent implements OnInit {
 
   private scrollTimeout: any;
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService, private router: Router) {}
 
   ngOnInit() {
     this.tmdbService.getGenres().subscribe(genres => {
-      const requests = genres.map(genre => this.tmdbService.getMoviesByGenre(genre.id));
+      const requests = genres.map(genre => this.tmdbService.getMoviesByGenre4(genre.id));
 
       forkJoin(requests).subscribe(results => {
         this.genres = genres.map((genre, i) => ({
@@ -131,5 +130,21 @@ export class CategoriesComponent implements OnInit {
 
   ngAfterViewInit() {
     this.updateNavigationState();
+  }
+
+  goToCategory(genre: GenreWithMovies) {
+    const genreSlug = this.slugify(genre.name);
+    this.router.navigate(['/categorias', genreSlug]);
+  }
+
+  private slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD') // remove accents
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-')             // spaces to -
+      .replace(/[^\w\-]+/g, '')         // remove non-word characters
+      .replace(/\-\-+/g, '-')           // collapse multiple -
+      .replace(/^-+|-+$/g, '');         // trim - from start/end
   }
 }

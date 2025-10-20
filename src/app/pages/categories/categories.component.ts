@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { Router } from '@angular/router'; // Importar Router
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
 import { Genre, Movie, TmdbService } from '../../services/tmdb.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
@@ -16,7 +17,7 @@ interface GenreCard {
   standalone: true,
   imports: [PageHeaderComponent, BreadcrumbComponent, MoviesSliderComponent],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.css'
+  styleUrls: ['./categories.component.css'] // Corrigido de styleUrl para styleUrls
 })
 export class CategoriesComponent {
 
@@ -26,13 +27,13 @@ export class CategoriesComponent {
   genreCards = signal<GenreCard[]>([]);
   popular: Movie[] = [];
   isLoadingPopular = true;
-  isLoadingGenres = true
+  isLoadingGenres = true;
   breadcrumbsArray: Breadcrumb[] = [
     { label: 'Home', url: '/' },
     { label: 'Categorias', url: '' }, 
   ];
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService, private router: Router) {}
 
   ngOnInit() {
     // Carrega banner da home
@@ -73,5 +74,23 @@ export class CategoriesComponent {
 
   get skeletons() {
     return Array.from({ length: 10 });
+  }
+
+  // Função para criar slug da categoria
+  private slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  // Função para navegar para categoria
+  goToCategory(genreName: string) {
+    const slug = this.slugify(genreName);
+    this.router.navigate(['/categorias', slug]);
   }
 }

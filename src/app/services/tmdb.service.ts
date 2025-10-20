@@ -130,6 +130,18 @@ export class TmdbService {
     .pipe(map(res => res.genres));
 }
 
+  // Pegar 4 filmes por gênero para os cards
+  getMoviesByGenre4(genreId: number): Observable<Movie[]> {
+    const params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('with_genres', genreId)
+      .set('language', 'pt-BR')
+      .set('page', '1');
+
+    return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie`, { params })
+      .pipe(map(res => res.results.slice(0, 4))); // pega até 4 filmes
+  }
+
   // Pegar filmes por gênero
   getMoviesByGenre(genreId: number): Observable<Movie[]> {
     const params = new HttpParams()
@@ -139,6 +151,6 @@ export class TmdbService {
       .set('page', '1');
 
     return this.http.get<{ results: Movie[] }>(`${this.apiUrl}/discover/movie`, { params })
-      .pipe(map(res => res.results.slice(0, 4))); // pega até 4 filmes
+      .pipe(map(res => res.results));
   }
 }

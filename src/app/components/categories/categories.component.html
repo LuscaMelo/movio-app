@@ -1,18 +1,25 @@
 <div class="relative max-w-[1500px] px-3 mx-auto py-16">
     <div class="mb-10 text-white border-l-4 border-brand px-3">
         <h2 class="text-2xl xl:text-3xl font-bold mb-2">Escolha por categoria</h2>
-        <p class="text-base lg:text-lg">Explore os gêneros e descubra filmes perfeitos para o seu momento</p>
+        <p class="text-base lg:text-lg">
+            Explore os gêneros e descubra filmes perfeitos para o seu momento
+        </p>
     </div>
 
     <!-- Skeleton Loader -->
-    <div *ngIf="isLoading" class="flex gap-4 overflow-x-auto flex-nowrap no-scrollbar px-1">
-        <div *ngFor="let sk of skeletons"
+    @if (isLoading) {
+    <div class="flex gap-4 overflow-x-auto flex-nowrap no-scrollbar px-1">
+        @for (sk of skeletons; track $index) {
+        <div
             class="min-w-[300px] h-[260px] rounded-lg shrink-0 bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
         </div>
+        }
     </div>
+    } @else {
 
     <!-- Slider -->
-    <div *ngIf="!isLoading" class="relative">
+    <div class="relative">
+
         <!-- Gradiente à esquerda -->
         <div class="absolute top-0 left-0 w-[20%] h-full bg-gradient-to-l from-transparent to-dark/95 z-[9] pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 hidden lg:flex"
             [class.opacity-100]="!isAtStart">
@@ -27,26 +34,33 @@
         <div #sliderRef
             class="flex overflow-x-auto gap-4 scroll-smooth no-scrollbar snap-x snap-mandatory pr-10 lg:pr-0"
             (scroll)="onScroll()">
-            <div *ngFor="let genre of genres"
+
+            @for (genre of genres; track genre.id) {
+            <div (click)="goToCategory(genre)"
                 class="snap-start min-w-[300px] max-w-[150px] bg-zinc-900 p-2 lg:p-3 rounded-lg cursor-pointer shrink-0 duration-300 hover:brightness-[123%]">
+
                 <div class="grid grid-cols-2 gap-2">
-                    <img *ngFor="let movie of genre.movies"
-                        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                    @for (movie of genre.movies; track movie.id) {
+                    <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
                         class="w-full h-[120px] lg:h-[160px] object-cover rounded" />
+                    }
                 </div>
+
                 <div class="flex items-center justify-between mt-4 px-2 text-zinc-300">
                     <h3 class="font-semibold text-lg">{{ genre.name }}</h3>
                     <i class="fa-solid fa-arrow-right-long text-xl text-zinc-500"></i>
                 </div>
             </div>
+            }
         </div>
-
     </div>
 
     <!-- Navegação -->
     <div class="mt-6 w-full flex justify-center transition-opacity duration-700" [class.opacity-0]="isLoading"
         [class.opacity-100]="!isLoading">
+
         <div class="flex items-center justify-between max-w-[1500px] px-3 w-full">
+
             <div class="flex gap-2">
                 <!-- Botão Esquerda -->
                 <button (click)="scrollLeft()" [disabled]="isAtStart"
@@ -66,10 +80,13 @@
                     </svg>
                 </button>
             </div>
+
             <div class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300">
                 <a routerLink="/categorias" class="lg:text-lg font-semibold">Ver todas</a>
                 <i class="fa-solid fa-arrow-right-long text-xl mt-1"></i>
             </div>
+
         </div>
     </div>
+    }
 </div>

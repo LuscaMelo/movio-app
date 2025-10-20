@@ -17,7 +17,7 @@
     @if (imageLoading) {
     <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/80 lg:to-black/50 to-black/40 z-20">
         <div class="max-w-[1500px] mx-auto w-full h-full px-3 flex items-end pb-6 lg:pb-10">
-            <h1 class="text-white text-2xl md:text-4xl lg:text-5xl font-bold">Categorias</h1>
+            <h1 class="text-white text-2xl md:text-4xl lg:text-5xl font-bold">{{ title ?? dynamicTitle }}</h1>
         </div>
     </div>
     }
