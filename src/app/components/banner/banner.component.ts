@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb.service';
+import { Router } from '@angular/router';
 
 interface Banner {
+  id: number;
   image: string;
   title: string;
   year: string;
@@ -26,11 +28,12 @@ export class BannerComponent implements OnInit {
   imageLoaded = false;
   private autoplayInterval!: any;
 
-  constructor(private tmdb: TmdbService) {}
+  constructor(private tmdb: TmdbService, private router: Router) {}
 
   ngOnInit(): void {
     this.tmdb.getPopularMovies().subscribe((res) => {
       this.banners = res.results.map((movie) => ({
+        id: movie.id,
         image: movie.backdrop_path
           ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
           : 'assets/default-banner.jpg',
@@ -110,5 +113,10 @@ nextBanner() {
       37: 'Faroeste',
     };
     return genres[id] || 'Desconhecido';
+  }
+
+  goToDetails() {
+    const id = this.banners[this.activeIndex].id;
+    this.router.navigate(['/filme', id]);
   }
 }

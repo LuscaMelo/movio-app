@@ -4,6 +4,7 @@ import { Genre, Movie, TmdbService } from '../../services/tmdb.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
 import { MoviesSliderComponent } from '../../components/movies-slider/movies-slider.component';
 import { forkJoin } from 'rxjs';
+import { Breadcrumb } from '../../models/interfaces';
 
 interface GenreCard {
   genre: Genre;
@@ -26,6 +27,10 @@ export class CategoriesComponent {
   popular: Movie[] = [];
   isLoadingPopular = true;
   isLoadingGenres = true
+  breadcrumbsArray: Breadcrumb[] = [
+    { label: 'Home', url: '/' },
+    { label: 'Categorias', url: '' }, 
+  ];
 
   constructor(private tmdbService: TmdbService) {}
 

@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../services/tmdb.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-slider',
@@ -16,6 +17,8 @@ export class MoviesSliderComponent implements OnInit, AfterViewInit {
   @Input() subtitle = '';
 
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLDivElement>;
+
+  constructor(private router: Router) {}
 
   skeletons = Array(6);
   private scrollTimeout: any;
@@ -105,5 +108,9 @@ clearActiveMovie() {
     const slider = this.sliderRef.nativeElement;
     this.isAtStart = slider.scrollLeft === 0;
     this.isAtEnd = Math.ceil(slider.scrollLeft + slider.clientWidth) >= slider.scrollWidth;
+  }
+
+  goToDetails(id: number) {
+    this.router.navigate(['/filme', id]);
   }
 }
