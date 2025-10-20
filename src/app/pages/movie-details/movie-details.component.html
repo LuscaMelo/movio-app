@@ -1,4 +1,117 @@
-<main class="bg-dark min-h-[100vh]" id="home">
+<main class="text-white min-h-screen" id="home">
+    <!-- Header e Breadcrumb -->
     <app-page-header [banner]="banner"></app-page-header>
     <app-breadcrumb [breadcrumbs]="breadcrumbsArray"></app-breadcrumb>
+
+    <div class="max-w-[1500px] mx-auto px-3 py-10">
+        @if (movie) {
+        <!-- GRID PRINCIPAL -->
+        <div class="flex flex-col md:flex-row gap-10">
+            <!-- Poster -->
+            <div class="lg:flex w-full max-w-[450px] justify-center items-start hidden">
+                <img [src]="'https://image.tmdb.org/t/p/original' + movie.poster_path" [alt]="movie.title"
+                    class="rounded-2xl shadow-lg w-full h-auto object-contain" />
+            </div>
+
+            <!-- Infos -->
+            <div class="flex flex-col w-full lg:max-w-[800px]">
+                <div class="w-full flex flex-col gap-y-4">
+                    <!-- Classificação -->
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <span class="text-sm text-zinc-400 text-lg">{{ movie.vote_average.toFixed(1) }}/10</span>
+                    </div>
+
+                    <!-- Título -->
+                    <h1 class="text-3xl lg:text-4xl font-bold leading-tight">
+                        {{ movie.title }}
+                    </h1>
+
+                    <!-- Tagline -->
+                    @if (movie.tagline) {
+                    <p class="text-lg italic text-zinc-400">{{ movie.tagline }}</p>
+                    }
+
+                    <!-- Gêneros -->
+                    <div class="flex flex-wrap gap-2">
+                        @for (genre of genres; track genre.id) {
+                        <span class="bg-zinc-800 px-3 py-1 rounded-full text-sm">
+                            {{ genre.name }}
+                        </span>
+                        }
+                    </div>
+
+                    <!-- Nota / duração / data -->
+                    <div class="flex flex-wrap items-center gap-4 text-sm">
+                        <span class="bg-yellow-500 text-black px-2 py-1 rounded font-semibold">
+                            IMDb {{ movie.vote_average.toFixed(1) }}
+                        </span>
+                        <span class="bg-zinc-700 px-2 py-1 rounded">
+                            {{ movie.runtime }} min
+                        </span>
+                        <span class="text-zinc-400">
+                            {{ movie.release_date | date: 'longDate' }}
+                        </span>
+                    </div>
+
+                    <!-- Sinopse -->
+                    <p class="text-zinc-300 leading-relaxed">
+                        {{ movie.overview }}
+                    </p>
+
+                    <!-- Botões -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <button
+                            class="flex items-center gap-2 bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
+                            <i class="fa-solid fa-circle-play"></i>
+                            Assistir trailer
+                        </button>
+                        <button
+                            class="flex gap-2 items-center border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
+                            <i class="fa-solid fa-heart"></i> Adicionar aos favoritos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Outras informações -->
+                <div class="flex flex-wrap gap-10 2xl:gap-16 bg-zinc-900/40 p-5 rounded-2xl mt-10">
+                    <div class="w-[40%] md:w-[27%] lg:w-auto">
+                        <h3 class="font-semibold text-zinc-400 mb-1 pb-1 border-b border-zinc-800">País</h3>
+                        <p class="text-white">
+                            {{ movie.production_countries?.[0]?.name || '—' }}
+                        </p>
+                    </div>
+                    <div class="w-[40%] md:w-[27%] lg:w-auto">
+                        <h3 class="font-semibold text-zinc-400 mb-1 pb-1 border-b border-zinc-800">Idioma</h3>
+                        <p class="text-white">
+                            {{ movie.spoken_languages?.[0]?.english_name || '—' }}
+                        </p>
+                    </div>
+                    <div class="w-[40%] md:w-[27%] lg:w-auto">
+                        <h3 class="font-semibold text-zinc-400 mb-1 pb-1 border-b border-zinc-800">Status</h3>
+                        <p class="text-white">{{ movie.status }}</p>
+                    </div>
+                    <div class="w-[40%] md:w-[27%] lg:w-auto">
+                        <h3 class="font-semibold text-zinc-400 mb-1 pb-1 border-b border-zinc-800">Orçamento</h3>
+                        <p class="text-white">
+                            {{ movie.budget ? (movie.budget | currency: 'USD':'symbol':'1.0-0') : '—' }}
+                        </p>
+                    </div>
+                    <div class="w-[40%] md:w-[27%] lg:w-auto">
+                        <h3 class="font-semibold text-zinc-400 mb-1 pb-1 border-b border-zinc-800">Bilheteria</h3>
+                        <p class="text-white">
+                            {{ movie.revenue ? (movie.revenue | currency: 'USD':'symbol':'1.0-0') : '—' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        } @else {
+
+        <div class="text-center text-zinc-500 py-20">
+            Carregando informações do filme...
+        </div>
+        }
+    </div>
 </main>
