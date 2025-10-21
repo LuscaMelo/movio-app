@@ -31,9 +31,10 @@
 
                     <!-- Input desktop -->
                     <div class="relative w-full max-w-md border border-zinc-500 rounded-full hidden lg:flex">
-                        <input type="text" placeholder="Buscar por filme"
+                        <input type="text" placeholder="Buscar por filme" [(ngModel)]="searchQuery"
+                            (keyup.enter)="searchMovies()"
                             class="w-full py-2 pl-4 pr-12 rounded-full bg-transparent duration-300 focus:outline-none transition" />
-                        <button
+                        <button (click)="searchMovies()"
                             class="absolute right-1 top-1/2 -translate-y-1/2 bg-zinc-100 text-zinc-900 duration-300 hover:bg-zinc-400 text-white rounded-full w-8 h-8 flex items-center justify-center">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -50,22 +51,23 @@
                 </button>
             </div>
 
-        </div> <!-- fim barra principal -->
+        </div>
 
-        <!-- Input mobile absoluto sem alterar altura da navbar -->
+        <!-- Input mobile -->
         <div class="absolute left-0 w-full flex lg:hidden justify-center items-center overflow-hidden top-[80px] transition-all duration-500 px-3"
             [ngClass]="showSearch ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'">
             <div class="relative w-full h-full border border-zinc-700 rounded-full flex items-center">
-                <input type="text" placeholder="Buscar por filme"
+                <input type="text" placeholder="Buscar por filme" [(ngModel)]="searchQuery"
+                    (keyup.enter)="searchMovies()"
                     class="w-full h-full py-3 pl-4 pr-12 rounded-full bg-transparent text-white focus:outline-none transition" />
-                <button class="absolute right-[6px] top-1/2 -translate-y-1/2 bg-zinc-100 text-zinc-900 hover:bg-zinc-400 text-white
-                   rounded-full w-8 h-8 flex items-center justify-center">
+                <button (click)="searchMovies()"
+                    class="absolute right-[6px] top-1/2 -translate-y-1/2 bg-zinc-100 text-zinc-900 hover:bg-zinc-400 text-white rounded-full w-8 h-8 flex items-center justify-center">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
         </div>
 
-    </div> <!-- fim container flex-col -->
+    </div>
 
     <!-- Overlay menu mobile -->
     <div class="fixed top-0 left-0 h-[110dvh] w-full bg-black/75 transition-all duration-500 z-10 lg:hidden"

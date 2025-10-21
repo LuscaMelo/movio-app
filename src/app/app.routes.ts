@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,11 @@ export const routes: Routes = [
     path: 'filme/:id',
     component: MovieDetailsComponent,
     data: { breadcrumb: 'Detalhes do filme' },
+  },
+  {
+    path: 'buscar',
+    component: SearchResultsComponent,
+    data: { breadcrumb: 'Buscar' },
   }
 ];
 

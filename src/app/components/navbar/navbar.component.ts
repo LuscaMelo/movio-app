@@ -1,11 +1,14 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { TmdbService } from '../../services/tmdb.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
@@ -13,6 +16,11 @@ export class NavbarComponent implements OnInit {
   menuOpen = false;
   scrolled = false;
   showSearch = false;
+  searchQuery = '';
+  searchResults: any[] = [];
+  isSearching = false;
+
+  constructor(private tmdbService: TmdbService, private router: Router) {}
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -41,5 +49,22 @@ export class NavbarComponent implements OnInit {
   @HostListener('window:scroll', [])
   onScroll(): void {
     this.scrolled = window.scrollY > 50;
+  }
+
+  // 🔍 Buscar filmes pelo nome digitado
+  searchMovies() {
+  const query = this.searchQuery.trim();
+  if (!query) return;
+
+  this.router.navigate(['/buscar'], { queryParams: { q: query } });
+  this.searchQuery = '';
+  this.showSearch = false;
+}
+
+  // Disparar busca ao pressionar Enter
+  onKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.searchMovies();
+    }
   }
 }
