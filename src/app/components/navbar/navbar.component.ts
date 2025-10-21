@@ -12,32 +12,32 @@ import { RouterModule } from '@angular/router';
 export class NavbarComponent implements OnInit {
   menuOpen = false;
   scrolled = false;
-
-  scrollToSection(id: string) {
-  const section = document.getElementById(id);
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  this.menuOpen = false;
-  document.body.classList.remove('no-scroll');
-}
+  showSearch = false;
 
   toggleMenu() {
-  this.menuOpen = !this.menuOpen;
-
-  if (this.menuOpen) {
-    document.body.classList.add('no-scroll');
-  } else {
-    document.body.classList.remove('no-scroll');
+    this.menuOpen = !this.menuOpen;
+    if (this.menuOpen) {
+      this.showSearch = false;
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
   }
-}
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+    if (this.showSearch) {
+      this.menuOpen = false;
+      this.scrolled = true; 
+    } else {
+      this.scrolled = window.scrollY > 50;  
+    }
+  }
 
   ngOnInit() {
     this.onScroll();
   }
 
-  // Escuta o evento de scroll da janela
   @HostListener('window:scroll', [])
   onScroll(): void {
     this.scrolled = window.scrollY > 50;

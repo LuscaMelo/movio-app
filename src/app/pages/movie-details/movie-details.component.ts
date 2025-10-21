@@ -29,7 +29,6 @@ export class MovieDetailsComponent implements OnInit {
         const numericId = Number(id);
         this.tmdbService.getMovieDetails(numericId).subscribe(movie => {
           this.movie = movie;
-          console.log(this.movie)
           this.banner = movie.backdrop_path
             ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path
             : null;
