@@ -96,7 +96,7 @@
                     {{ banners[activeIndex].description }}
                 </p>
 
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-3 gap-y-6">
                     <button type="button" (click)="goToDetails()"
                         class="flex items-center gap-2 bg-brand px-4 lg:px-5 py-2 rounded hover:bg-red-700 transition">
                         <i class="fa-solid fa-eye"></i>
@@ -107,6 +107,11 @@
                         <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer"></i>
                         Adicionar aos favoritos
                     </button>
+                    <div
+                        class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300 pl-3 md:pl-8">
+                        <a routerLink="/categorias" class="lg:text-lg font-semibold">Ver todos</a>
+                        <i class="fa-solid fa-arrow-right-long text-xl mt-1"></i>
+                    </div>
                 </div>
             </div>
 

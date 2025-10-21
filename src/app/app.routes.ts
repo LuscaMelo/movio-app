@@ -4,6 +4,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { TopRatedComponent } from './pages/top-rated/top-rated.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,12 @@ export const routes: Routes = [
     path: 'buscar',
     component: SearchResultsComponent,
     data: { breadcrumb: 'Buscar' },
-  }
+  },
+  {
+    path: 'mais-bem-avaliados',
+    component: TopRatedComponent,
+    data: { breadcrumb: 'Buscar' },
+  },
+
 ];
 
