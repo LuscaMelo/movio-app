@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface Banner {
   id: number;
@@ -19,7 +19,7 @@ interface Banner {
 @Component({
   selector: 'app-top-rated',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './top-rated.component.html',
   styleUrls: ['./top-rated.component.css'],
 })
