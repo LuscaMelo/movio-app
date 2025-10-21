@@ -69,9 +69,10 @@
 
         <!-- Slider de sugestões -->
         @if (movies.length === 0) {
-        <div class="mt-8">
-            <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular" [title]="'Sugestões para você'"
-                [subtitle]="'Aproveite os melhores títulos recomendados'">
+        <div class="">
+            <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular"
+                [title]="'Não encontrou o que procurava?'"
+                [subtitle]="'Dê uma olhada nas produções que estão em alta agora'">
             </app-movie-slider>
         </div>
         }
