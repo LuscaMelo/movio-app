@@ -3,21 +3,30 @@ import { ActivatedRoute } from '@angular/router';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
 import { TmdbService, Movie } from '../../services/tmdb.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
+import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
 import { Breadcrumb } from '../../models/interfaces';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [PageHeaderComponent, BreadcrumbComponent, CommonModule],
+  imports: [
+    PageHeaderComponent,
+    BreadcrumbComponent,
+    TrailerModalComponent,
+    CommonModule
+  ],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
-
   movie?: Movie;
   banner?: string | null;
   breadcrumbsArray: Breadcrumb[] = [];
+
+  // Controle do modal
+  showTrailer = false;
+  trailerUrl: string | null = null;
 
   constructor(private tmdbService: TmdbService, private route: ActivatedRoute) {}
 
@@ -45,6 +54,25 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   get genres() {
-  return this.movie?.genres ?? [];
-}
+    return this.movie?.genres ?? [];
+  }
+
+  // Função para abrir o modal com o trailer
+  openTrailer() {
+    if (!this.movie) return;
+
+    this.tmdbService.getMovieVideos(this.movie.id).subscribe(videos => {
+      const trailer = videos.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
+      if (trailer) {
+        this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+        this.showTrailer = true;
+      }
+    });
+  }
+
+  // Fechar o modal
+  closeTrailer() {
+    this.showTrailer = false;
+    this.trailerUrl = null;
+  }
 }

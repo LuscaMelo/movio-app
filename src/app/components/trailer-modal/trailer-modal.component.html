@@ -1,0 +1,17 @@
+@if (visible) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-3"
+    (click)="onOverlayClick($event)" [class.animate-fadeIn]="animatingIn" [class.animate-fadeOut]="animatingOut">
+    <div class="relative w-full max-w-4xl aspect-video bg-black shadow-xl transition-transform duration-300 scale-100"
+        (click)="$event.stopPropagation()">
+        @if (trailerUrl) {
+        <iframe [src]="trailerUrl | safeUrl" class="w-full h-full rounded-md" frameborder="0"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        }
+
+        <button (click)="closeModal()"
+            class="absolute top-[-40px] right-0 text-white text-2xl hover:text-red-500 transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+</div>
+}

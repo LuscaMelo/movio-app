@@ -63,7 +63,7 @@
           <i class="fa-solid fa-eye"></i>
           Ver detalhes
         </button>
-        <button type="button"
+        <button type="button" (click)="openTrailerModal()"
           class="flex items-center gap-2 border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
           <i class="fa-solid fa-circle-play"></i>
           Assistir trailer
@@ -96,4 +96,7 @@
       </button>
     </div>
   </div>
+
+  <app-trailer-modal [visible]="showTrailerModal" [trailerUrl]="trailerUrl" (close)="closeTrailerModal()">
+  </app-trailer-modal>
 </div>

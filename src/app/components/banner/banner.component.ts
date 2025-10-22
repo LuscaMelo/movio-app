@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb.service';
 import { Router } from '@angular/router';
+import { TrailerModalComponent } from '../trailer-modal/trailer-modal.component';
 
 interface Banner {
   id: number;
@@ -17,7 +18,7 @@ interface Banner {
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TrailerModalComponent],
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],
 })
@@ -119,4 +120,30 @@ nextBanner() {
     const id = this.banners[this.activeIndex].id;
     this.router.navigate(['/filme', id]);
   }
+
+  showTrailerModal = false;
+trailerUrl: string | null = null;
+
+openTrailerModal() {
+  const movieId = this.banners[this.activeIndex].id;
+
+  this.tmdb.getMovieVideos(movieId).subscribe((videos) => {
+  const trailer = videos.find(
+    (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+  );
+
+  if (trailer) {
+    this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+    this.showTrailerModal = true;
+  } else {
+    alert('Trailer não disponível para este título.');
+  }
+});
+
+}
+
+closeTrailerModal() {
+  this.showTrailerModal = false;
+  this.trailerUrl = null;
+}
 }
