@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
 import { TmdbService, Movie } from '../../services/tmdb.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
-import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
+import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component'
 import { Breadcrumb } from '../../models/interfaces';
 import { CommonModule } from '@angular/common';
 
@@ -28,12 +28,15 @@ export class MovieDetailsComponent implements OnInit {
   showTrailer = false;
   trailerUrl: string | null = null;
 
+  // Controle do popup
+  showPopup = false;
+  popupMessage = '';
+
   constructor(private tmdbService: TmdbService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-
       if (id) {
         const numericId = Number(id);
         this.tmdbService.getMovieDetails(numericId).subscribe(movie => {
@@ -57,22 +60,35 @@ export class MovieDetailsComponent implements OnInit {
     return this.movie?.genres ?? [];
   }
 
-  // Função para abrir o modal com o trailer
+  // Abre o modal se houver trailer
   openTrailer() {
     if (!this.movie) return;
 
     this.tmdbService.getMovieVideos(this.movie.id).subscribe(videos => {
       const trailer = videos.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
+
       if (trailer) {
         this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
         this.showTrailer = true;
+      } else {
+        this.showPopupMessage('Trailer não disponível para este filme');
       }
     });
   }
 
-  // Fechar o modal
+  // Fecha o modal
   closeTrailer() {
     this.showTrailer = false;
     this.trailerUrl = null;
+  }
+
+  // Exibe popup temporário
+  showPopupMessage(message: string) {
+    this.popupMessage = message;
+    this.showPopup = true;
+
+    setTimeout(() => {
+      this.showPopup = false;
+    }, 3000); // Fecha automaticamente após 3s
   }
 }

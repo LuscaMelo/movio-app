@@ -29,6 +29,14 @@ export class BannerComponent implements OnInit {
   imageLoaded = false;
   private autoplayInterval!: any;
 
+  // Modal do trailer
+  showTrailerModal = false;
+  trailerUrl: string | null = null;
+
+  // Popup
+  showPopup = false;
+  popupMessage = '';
+
   constructor(private tmdb: TmdbService, private router: Router) {}
 
   ngOnInit(): void {
@@ -59,11 +67,11 @@ export class BannerComponent implements OnInit {
   }
 
   private startAutoplay() {
-  this.autoplayInterval = setInterval(() => {
-    this.imageLoaded = false; // reset antes de trocar
-    this.activeIndex = (this.activeIndex + 1) % this.banners.length;
-  }, 15000);
-}
+    this.autoplayInterval = setInterval(() => {
+      this.imageLoaded = false;
+      this.activeIndex = (this.activeIndex + 1) % this.banners.length;
+    }, 15000);
+  }
 
   private restartAutoplay() {
     clearInterval(this.autoplayInterval);
@@ -71,21 +79,19 @@ export class BannerComponent implements OnInit {
   }
 
   prevBanner() {
-  if (this.banners.length === 0) return;
+    if (this.banners.length === 0) return;
+    this.imageLoaded = false;
+    this.activeIndex =
+      (this.activeIndex - 1 + this.banners.length) % this.banners.length;
+    this.restartAutoplay();
+  }
 
-  this.imageLoaded = false; // <-- resetar antes de trocar
-  this.activeIndex =
-    (this.activeIndex - 1 + this.banners.length) % this.banners.length;
-  this.restartAutoplay();
-}
-
-nextBanner() {
-  if (this.banners.length === 0) return;
-
-  this.imageLoaded = false; // <-- resetar antes de trocar
-  this.activeIndex = (this.activeIndex + 1) % this.banners.length;
-  this.restartAutoplay();
-}
+  nextBanner() {
+    if (this.banners.length === 0) return;
+    this.imageLoaded = false;
+    this.activeIndex = (this.activeIndex + 1) % this.banners.length;
+    this.restartAutoplay();
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.autoplayInterval);
@@ -121,29 +127,33 @@ nextBanner() {
     this.router.navigate(['/filme', id]);
   }
 
-  showTrailerModal = false;
-trailerUrl: string | null = null;
+  // Abrir trailer com fallback de popup
+  openTrailerModal() {
+    const movieId = this.banners[this.activeIndex].id;
 
-openTrailerModal() {
-  const movieId = this.banners[this.activeIndex].id;
+    this.tmdb.getMovieVideos(movieId).subscribe((videos) => {
+      const trailer = videos.find(
+        (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+      );
 
-  this.tmdb.getMovieVideos(movieId).subscribe((videos) => {
-  const trailer = videos.find(
-    (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
-  );
-
-  if (trailer) {
-    this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
-    this.showTrailerModal = true;
-  } else {
-    alert('Trailer não disponível para este título.');
+      if (trailer) {
+        this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+        this.showTrailerModal = true;
+      } else {
+        this.showPopupMessage('Trailer não disponível para este título.');
+      }
+    });
   }
-});
 
-}
+  closeTrailerModal() {
+    this.showTrailerModal = false;
+    this.trailerUrl = null;
+  }
 
-closeTrailerModal() {
-  this.showTrailerModal = false;
-  this.trailerUrl = null;
-}
+  // ⚠️ Popup de aviso
+  showPopupMessage(message: string) {
+    this.popupMessage = message;
+    this.showPopup = true;
+    setTimeout(() => (this.showPopup = false), 3000);
+  }
 }

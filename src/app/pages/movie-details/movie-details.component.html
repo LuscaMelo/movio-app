@@ -115,6 +115,16 @@
         }
     </div>
 
+    <!-- Modal do trailer -->
     <app-trailer-modal [visible]="showTrailer" [trailerUrl]="trailerUrl" (close)="closeTrailer()">
     </app-trailer-modal>
+
+    <!-- Popup simples -->
+    @if (showPopup) {
+    <div
+        class="fixed bottom-6 right-6 bg-brand text-white px-4 py-3 rounded-lg shadow-2xl z-50 animate-fadeIn flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation text-lg pr-1"></i>
+        <span>{{ popupMessage }}</span>
+    </div>
+    }
 </main>

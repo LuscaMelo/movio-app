@@ -4,8 +4,8 @@
     <div class="relative w-full max-w-4xl aspect-video bg-black shadow-xl transition-transform duration-300 scale-100"
         (click)="$event.stopPropagation()">
         @if (trailerUrl) {
-        <iframe [src]="trailerUrl | safeUrl" class="w-full h-full rounded-md" frameborder="0"
-            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe [src]="trailerUrl | safeUrl" class="w-full h-full" frameborder="0" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
         }
 
         <button (click)="closeModal()"
