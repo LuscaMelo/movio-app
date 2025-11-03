@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageHeaderComponent } from "../../components/page-header/page-header.component";
 import { TmdbService, Movie } from '../../services/tmdb.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
 import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component'
 import { Breadcrumb } from '../../models/interfaces';
@@ -32,7 +33,11 @@ export class MovieDetailsComponent implements OnInit {
   showPopup = false;
   popupMessage = '';
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute) {}
+  constructor(
+    private tmdbService: TmdbService,
+    private route: ActivatedRoute,
+    public favoritesService: FavoritesService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -90,5 +95,15 @@ export class MovieDetailsComponent implements OnInit {
     setTimeout(() => {
       this.showPopup = false;
     }, 3000); // Fecha automaticamente após 3s
+  }
+
+  toggleFavorite(movie: Movie) {
+    if (this.favoritesService.isFavorite(movie.id)) {
+      this.favoritesService.removeFavorite(movie.id);
+    } else {
+      this.tmdbService.getMovieDetails(movie.id).subscribe(fullMovie => {
+        this.favoritesService.addFavorite(fullMovie);
+      });
+    }
   }
 }

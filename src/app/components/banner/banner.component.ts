@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { Router } from '@angular/router';
 import { TrailerModalComponent } from '../trailer-modal/trailer-modal.component';
 
@@ -37,7 +38,11 @@ export class BannerComponent implements OnInit {
   showPopup = false;
   popupMessage = '';
 
-  constructor(private tmdb: TmdbService, private router: Router) {}
+  constructor(
+    private tmdb: TmdbService,
+    private router: Router,
+    public favoritesService: FavoritesService,
+  ) {}
 
   ngOnInit(): void {
     this.tmdb.getPopularMovies().subscribe((res) => {
@@ -76,6 +81,11 @@ export class BannerComponent implements OnInit {
   private restartAutoplay() {
     clearInterval(this.autoplayInterval);
     this.startAutoplay();
+  }
+
+  get isFavoriteCurrent(): boolean {
+    const current = this.banners[this.activeIndex];
+    return current ? this.favoritesService.isFavorite(current.id) : false;
   }
 
   prevBanner() {
@@ -150,10 +160,34 @@ export class BannerComponent implements OnInit {
     this.trailerUrl = null;
   }
 
-  // ⚠️ Popup de aviso
+  // Popup de aviso
   showPopupMessage(message: string) {
     this.popupMessage = message;
     this.showPopup = true;
     setTimeout(() => (this.showPopup = false), 3000);
+  }
+
+  addToFavorites() {
+    const currentMovie = this.banners[this.activeIndex];
+
+    if (!this.favoritesService.isFavorite(currentMovie.id)) {
+      this.favoritesService.addFavorite(currentMovie);
+    } else {
+      this.favoritesService.removeFavorite(currentMovie.id);
+    }
+  }
+
+  toggleFavorite(movie: Banner) {
+    const favorite = {
+      id: movie.id,
+      title: movie.title,
+      poster_path: movie.image.replace('https://image.tmdb.org/t/p/w500', ''), // ou ajuste se estiver usando poster
+      overview: movie.description || 'Sem descrição disponível.',
+      vote_average: movie.imdb,
+      release_date: movie.year,
+      backdrop_path: movie.image.replace('https://image.tmdb.org/t/p/original', ''),
+    } as any;
+
+    this.favoritesService.toggleFavorite(favorite);
   }
 }

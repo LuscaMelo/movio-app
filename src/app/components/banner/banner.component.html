@@ -68,9 +68,12 @@
           <i class="fa-solid fa-circle-play"></i>
           Assistir trailer
         </button>
-        <button type="button"
-          class="flex gap-2 items-center border border-white px-4 lg:px-5 py-2 rounded hover:bg-white hover:text-black transition">
-          <i class="fa-solid fa-heart"></i> Adicionar aos favoritos
+        <button type="button" (click)="toggleFavorite(banners[activeIndex])"
+          class="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm hover:bg-white transition duration-300">
+          <i class="fa-heart fa-solid text-xl transition-colors duration-300" [ngClass]="{
+            'text-brand': favoritesService.isFavorite(banners[activeIndex].id),
+            'text-zinc-900': !favoritesService.isFavorite(banners[activeIndex].id)
+          }"></i>
         </button>
       </div>
     </div>

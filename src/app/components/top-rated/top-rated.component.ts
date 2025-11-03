@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TmdbService } from '../../services/tmdb.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { Router, RouterModule } from '@angular/router';
 
 interface Banner {
@@ -36,7 +37,11 @@ export class TopRated implements OnInit {
   // Para controlar quando cada imagem terminou de carregar
   imageLoaded = [false, false];
 
-  constructor(private tmdb: TmdbService, private router: Router) {}
+  constructor(
+    private tmdb: TmdbService,
+    private router: Router,
+    public favoritesService: FavoritesService,
+  ) {}
 
   ngOnInit(): void {
     this.tmdb.getTopRatedMovies().subscribe((res) => {
@@ -117,6 +122,25 @@ export class TopRated implements OnInit {
     };
     return genres[id] || 'Desconhecido';
   }
+
+  toggleFavorite(banner: Banner) {
+    const movie = {
+      id: banner.id,
+      title: banner.title,
+      poster_path: banner.poster?.startsWith('http')
+        ? banner.poster.replace('https://image.tmdb.org/t/p/w500', '')
+        : banner.poster,
+      overview: banner.description || 'Sem descrição disponível.',
+      vote_average: parseFloat(banner.average),
+      release_date: banner.year,
+      backdrop_path: banner.image?.startsWith('http')
+        ? banner.image.replace('https://image.tmdb.org/t/p/original', '')
+        : banner.image,
+    } as any;
+
+    this.favoritesService.toggleFavorite(movie);
+  }
+
 
   goToDetails() {
     const id = this.banners[this.activeIndex].id;

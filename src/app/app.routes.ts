@@ -5,11 +5,17 @@ import { MovieDetailsComponent } from './pages/movie-details/movie-details.compo
 import { CategoryComponent } from './pages/category/category.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { TopRatedComponent } from './pages/top-rated/top-rated.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    data: { breadcrumb: 'Início' },
+  },
+  {
+    path: 'favoritos',
+    component: FavoritesComponent,
     data: { breadcrumb: 'Início' },
   },
   {

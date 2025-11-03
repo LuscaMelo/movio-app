@@ -102,10 +102,12 @@
                         <i class="fa-solid fa-eye"></i>
                         Ver detalhes
                     </button>
-                    <button type="button"
-                        class="flex gap-2 items-center border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition text-sm sm:text-base">
-                        <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer"></i>
-                        Adicionar aos favoritos
+                    <button type="button" (click)="toggleFavorite(banners[activeIndex])"
+                        class="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm hover:bg-white transition duration-300 hover:text-brand">
+                        <i class="fa-heart fa-solid text-xl transition-colors duration-300" [ngClass]="{
+                            'text-brand': favoritesService.isFavorite(banners[activeIndex].id),
+                            'text-dark': !favoritesService.isFavorite(banners[activeIndex].id)
+                        }"></i>
                     </button>
                     <button
                         class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300 pl-3 md:pl-8 z-20">
