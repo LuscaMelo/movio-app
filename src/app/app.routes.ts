@@ -6,42 +6,55 @@ import { CategoryComponent } from './pages/category/category.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { TopRatedComponent } from './pages/top-rated/top-rated.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { PopularComponent } from './pages/popular/popular.component';
+import { TrendingComponent } from './pages/trending/trending.component';
+import { NowPlayingComponent } from './pages/now-playing/now-playing.component';
+import { UpcomingComponent } from './pages/upcoming/upcoming.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    data: { breadcrumb: 'Início' },
   },
   {
     path: 'favoritos',
     component: FavoritesComponent,
-    data: { breadcrumb: 'Início' },
+  },
+  {
+    path: 'mais-populares',
+    component: PopularComponent,
+  },
+  {
+    path: 'tendencias-da-semana',
+    component: TrendingComponent,
+  },
+  {
+    path: 'em-cartaz',
+    component: NowPlayingComponent,
+  },
+  {
+    path: 'em-breve',
+    component: UpcomingComponent,
   },
   {
     path: 'categorias',
     component: CategoriesComponent,
-    data: { breadcrumb: 'Categorias' },
   },
   {
     path: 'categorias/:categoria',
     component: CategoryComponent,
-    data: { breadcrumb: 'Categoria' },
   },
   {
     path: 'filme/:id',
     component: MovieDetailsComponent,
-    data: { breadcrumb: 'Detalhes do filme' },
   },
   {
     path: 'buscar',
     component: SearchResultsComponent,
-    data: { breadcrumb: 'Buscar' },
   },
   {
     path: 'mais-bem-avaliados',
     component: TopRatedComponent,
-    data: { breadcrumb: 'Buscar' },
   },
 
 ];

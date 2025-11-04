@@ -1,0 +1,65 @@
+<main class="bg-dark min-h-[100vh]">
+    <!-- Banner e título -->
+    <app-page-header [banner]="banner" [title]="title"></app-page-header>
+
+    <!-- Breadcrumbs -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbsArray"></app-breadcrumb>
+
+    <div class="relative max-w-[1500px] px-3 mx-auto py-16">
+
+        <!-- Título da seção -->
+        <div class="mb-10 text-white border-l-4 border-brand px-3">
+            @if (!isLoading) {
+            <h2 class="text-2xl xl:text-3xl font-bold mb-2">Em breve nos cinemas</h2>
+            <p>Descubra os próximos títulos que vão emocionar, surpreender e entreter</p>
+            } @else {
+            <div class="h-10 w-48 bg-zinc-800 animate-pulse rounded mb-2"></div>
+            <div class="h-6 w-64 bg-zinc-800 animate-pulse rounded"></div>
+            }
+        </div>
+
+        <!-- Skeleton Loader -->
+        @if (isLoading) {
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 px-1">
+            @for (sk of skeletons; track $index) {
+            <div
+                class="h-[300px] lg:h-[380px] rounded-lg bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
+            </div>
+            }
+        </div>
+        } @else {
+
+        <!-- Grid de filmes -->
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            @for (movie of movies; track movie.id) {
+            <div class="relative rounded-lg overflow-hidden cursor-pointer shrink-0 duration-300 hover:brightness-[108%] group bg-zinc-800"
+                (click)="goToDetails(movie.id)">
+
+                <!-- Badge Classificação -->
+                <div
+                    class="absolute top-2 right-2 z-20 flex items-center gap-2 rounded-full py-1 px-3 shadow-xl bg-yellow-500 text-white text-xs font-bold">
+                    <i class="fa-solid fa-star"></i>
+                    <p>{{ movie.vote_average.toFixed(1) }}</p>
+                </div>
+
+                <!-- Imagem do filme -->
+                <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title"
+                    class="w-full h-auto block group-hover:scale-[102%] duration-500" />
+
+                <!-- Overlay com gradiente + botão -->
+                <div
+                    class="absolute inset-0 flex items-end justify-center transition-all duration-300 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 bg-gradient-to-t from-black/80 to-transparent">
+                    <button
+                        class="flex items-center justify-center gap-2 bg-brand px-4 py-2 m-4 w-full rounded-md hover:bg-red-700 transition text-sm sm:text-base text-white"
+                        (click)="$event.stopPropagation(); goToDetails(movie.id)">
+                        <i class="fa-solid fa-eye"></i>
+                        Ver detalhes
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+
+        }
+    </div>
+</main>

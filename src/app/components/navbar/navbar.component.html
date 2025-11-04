@@ -11,12 +11,12 @@
         <div class="w-full h-[80px] flex justify-between items-center relative z-20">
 
             <!-- Logo -->
-            <div class="relative z-30">
+            <div class="relative z-10">
                 <a routerLink="/"><img class="max-w-[130px]" src="/logo.png" alt="logotipo da Movio"></a>
             </div>
 
             <!-- Navegação desktop -->
-            <nav class="flex-1 justify-center hidden lg:flex">
+            <nav class="flex-1 justify-center hidden xl:flex">
                 <ul class="flex gap-6 text-md font-semibold">
                     <li class="hover:text-brand duration-300 cursor-pointer">
                         <a routerLink="/">Início</a>
@@ -25,7 +25,19 @@
                         <a routerLink="/categorias">Categorias</a>
                     </li>
                     <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/mais-populares">Populares</a>
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/tendencias-da-semana">Tendências</a>
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
                         <a routerLink="/mais-bem-avaliados">Mais bem avaliados</a>
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/em-cartaz">Em cartaz</a>
+                    </li>
+                    <li class="hover:text-brand duration-300 cursor-pointer">
+                        <a routerLink="/em-breve">Em breve</a>
                     </li>
                 </ul>
             </nav>
@@ -55,7 +67,7 @@
                 </div>
 
                 <!-- Botão mobile -->
-                <button class="lg:hidden text-2xl" type="button" aria-label="Abrir menu" (click)="toggleMenu()">
+                <button class="xl:hidden text-2xl" type="button" aria-label="Abrir menu" (click)="toggleMenu()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -79,11 +91,11 @@
     </div>
 
     <!-- Overlay menu mobile -->
-    <div class="fixed top-0 left-0 h-[110dvh] w-full bg-black/75 transition-all duration-500 z-10 lg:hidden"
+    <div class="fixed top-0 left-0 h-[110dvh] w-full bg-black/85 transition-all duration-500 z-40 xl:hidden"
         [ngClass]="menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" (click)="toggleMenu()"></div>
 
     <!-- Menu mobile -->
-    <div class="absolute top-0 right-0 w-full md:w-[65%] h-[110dvh] bg-dark shadow-lg transition-all duration-300 lg:hidden z-20"
+    <div class="absolute top-0 right-0 w-full md:w-[65%] h-[110dvh] bg-dark shadow-lg transition-all duration-300 xl:hidden z-50"
         [ngClass]="menuOpen ? 'translate-x-0' : '-translate-x-[-105vw] pointer-events-none'">
 
         <i class="fa-solid fa-xmark absolute right-5 top-7 text-2xl cursor-pointer" (click)="toggleMenu()"></i>
@@ -100,8 +112,20 @@
                 <a routerLink="/categorias">
                     <li class="hover:text-brand duration-300 cursor-pointer">Categorias</li>
                 </a>
+                <a routerLink="/mais-populares">
+                    <li class="hover:text-brand duration-300 cursor-pointer">Populares</li>
+                </a>
+                <a routerLink="/tendencias-da-semana">
+                    <li class="hover:text-brand duration-300 cursor-pointer">Tendências</li>
+                </a>
                 <a routerLink="/mais-bem-avaliados">
                     <li class="hover:text-brand duration-300 cursor-pointer">Mais bem avaliados</li>
+                </a>
+                <a routerLink="/em-cartaz">
+                    <li class="hover:text-brand duration-300 cursor-pointer">Em cartaz</li>
+                </a>
+                <a routerLink="/em-breve">
+                    <li class="hover:text-brand duration-300 cursor-pointer">Em breve</li>
                 </a>
             </ul>
         </div>
