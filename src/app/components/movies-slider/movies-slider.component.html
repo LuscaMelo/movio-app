@@ -66,24 +66,31 @@
     <!-- Navegação -->
     <div class="mt-6 w-full flex justify-center transition-opacity duration-700" [class.opacity-0]="isLoading"
         [class.opacity-100]="!isLoading">
-        <div class="flex justify-start gap-2 max-w-[1500px] px-3 w-full">
-            <!-- Botão Esquerda -->
-            <button (click)="scrollLeft()" [disabled]="isAtStart"
-                class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
+        <div class="flex justify-between max-w-[1500px] px-3 w-full">
+            <div class="flex gap-2">
+                <!-- Botão Esquerda -->
+                <button (click)="scrollLeft()" [disabled]="isAtStart"
+                    class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
 
-            <!-- Botão Direita -->
-            <button (click)="scrollRight()" [disabled]="isAtEnd"
-                class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+                <!-- Botão Direita -->
+                <button (click)="scrollRight()" [disabled]="isAtEnd"
+                    class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300">
+                <a routerLink={{link}} class="lg:text-lg font-semibold">Ver todos</a>
+                <i class="fa-solid fa-arrow-right-long text-xl mt-1"></i>
+            </div>
         </div>
     </div>
 </div>

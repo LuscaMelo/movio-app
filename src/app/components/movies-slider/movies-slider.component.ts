@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../services/tmdb.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movie-slider',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './movies-slider.component.html',
   styleUrls: ['./movies-slider.component.css']
 })
@@ -15,6 +15,7 @@ export class MoviesSliderComponent implements OnInit, AfterViewInit {
   @Input() isLoading = true;
   @Input() title = '';
   @Input() subtitle = '';
+  @Input() link = '';
 
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLDivElement>;
 

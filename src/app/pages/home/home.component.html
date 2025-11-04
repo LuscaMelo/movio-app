@@ -9,19 +9,23 @@
     <div class="pb-16">
         <div>
             <app-movie-slider [movies]="nowPlaying" [isLoading]="isLoadingNowPlaying" [title]="'Em cartaz agora'"
-                [subtitle]="'Diversão garantida com os filmes que estão bombando nas telonas'"></app-movie-slider>
+                [subtitle]="'Diversão garantida com os filmes que estão bombando nas telonas'"
+                [link]="'/em-cartaz'"></app-movie-slider>
         </div>
         <div>
             <app-movie-slider [movies]="upcoming" [isLoading]="isLoadingUpcoming" [title]="'Em breve nos cinemas'"
-                [subtitle]="'Descubra os próximos títulos que vão emocionar, surpreender e entreter'"></app-movie-slider>
+                [subtitle]="'Descubra os próximos títulos que vão emocionar, surpreender e entreter'"
+                [link]="'/em-breve'"></app-movie-slider>
         </div>
         <div>
             <app-movie-slider [movies]="popular" [isLoading]="isLoadingPopular" [title]="'Mais populares'"
-                [subtitle]="'Esses são os títulos mais assistidos e comentados recentemente. Já viu todos?'"></app-movie-slider>
+                [subtitle]="'Esses são os títulos mais assistidos e comentados recentemente. Já viu todos?'"
+                [link]="'/mais-populares'"></app-movie-slider>
         </div>
         <div>
             <app-movie-slider [movies]="trending" [isLoading]="isLoadingTrending" [title]="'Tendências da semana'"
-                [subtitle]="'Os filmes que estão em alta no momento, segundo os fãs e a crítica'"></app-movie-slider>
+                [subtitle]="'Os filmes que estão em alta no momento, segundo os fãs e a crítica'"
+                [link]="'/tendencias-da-semana'"></app-movie-slider>
         </div>
     </div>
 </main>
