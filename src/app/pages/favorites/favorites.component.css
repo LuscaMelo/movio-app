@@ -1,0 +1,16 @@
+@keyframes fadeIn {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.animate-fadeIn {
+    position: relative;
+    animation: fadeIn 0.3s ease-out forwards;
+}

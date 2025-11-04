@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal, effect } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FavoritesService, FavoriteItem } from '../../services/favorites.service';
 import { BreadcrumbComponent } from "../../components/breadcrumb/breadcrumb.component";
@@ -20,13 +20,17 @@ export class FavoritesComponent {
   title = 'Meus Favoritos';
   banner?: string | null;
 
+  // Controle do modal
+  selectedMovieId = signal<number | null>(null);
+  isModalOpen = signal(false);
+
   breadcrumbsArray: Breadcrumb[] = [
     { label: 'Home', url: '/' },
     { label: 'Filmes', url: '/categorias' },
     { label: 'Favoritos', url: '/favoritos' }
   ];
 
-  // Signal reativa do service, pegando valor inicial
+  // Signal reativa do service
   favoritesSignal = toSignal<FavoriteItem[]>(this.favoritesService.favorites$, { requireSync: true });
 
   // Computed para template
@@ -37,7 +41,7 @@ export class FavoritesComponent {
       title: (f as any).title || (f as any).name || 'Sem título',
       image: (f as any).image || 'https://via.placeholder.com/500x750?text=Sem+Imagem',
       vote_average: (f as any).imdb ?? null,
-      overview: (f as any).overview ?? '', // pega o que já existe, não sobrescreve
+      overview: (f as any).overview ?? '',
     }));
   });
 
@@ -48,13 +52,35 @@ export class FavoritesComponent {
       const first = favs[0];
       this.banner = 'image' in first && first.image ? first.image : null;
     }
+
+    effect(() => {
+      if (this.isModalOpen()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
   }
 
   goToDetails(id: number) {
     this.router.navigate(['/filme', id]);
   }
 
-  removeFavorite(id: number) {
-    this.favoritesService.removeFavorite(id);
+  openConfirmModal(id: number) {
+    this.selectedMovieId.set(id);
+    this.isModalOpen.set(true);
+  }
+
+  cancelRemove() {
+    this.isModalOpen.set(false);
+    this.selectedMovieId.set(null);
+  }
+
+  confirmRemove() {
+    const id = this.selectedMovieId();
+    if (id !== null) {
+      this.favoritesService.removeFavorite(id);
+    }
+    this.cancelRemove();
   }
 }

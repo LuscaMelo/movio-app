@@ -1,7 +1,7 @@
 <main class="bg-dark min-h-[100vh]">
 
+    <!-- Banner -->
     <div class="relative h-[400px] xl:h-[600px] w-full bg-zinc-700">
-        <!-- Overlay e título -->
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black via-black/30 to-black z-20">
             <div class="max-w-[1500px] mx-auto w-full h-full px-3 flex items-end pb-6 lg:pb-10">
                 <h1 class="text-white text-2xl md:text-4xl lg:text-5xl font-bold">
@@ -9,16 +9,12 @@
                 </h1>
             </div>
         </div>
-
-        <!-- Imagem -->
         <img src='banner.jpg' alt="Banner do filme" class="w-full h-full block object-cover object-top z-0" />
-
     </div>
 
     <app-breadcrumb [breadcrumbs]="breadcrumbsArray"></app-breadcrumb>
 
     <div class="relative max-w-[1500px] px-3 mx-auto py-16">
-
         <div class="mb-10 text-white border-l-4 border-brand px-3">
             <h2 class="text-2xl xl:text-3xl font-bold mb-2">{{ title }}</h2>
             <p>Veja a lista completa dos seus filmes favoritos</p>
@@ -30,11 +26,12 @@
                 <ng-container *ngFor="let movie of favoritesView()">
                     <div class="relative flex flex-col md:flex-row bg-zinc-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 cursor-pointer"
                         (click)="goToDetails(movie.id)">
+
                         <!-- Botão de coração -->
                         <button
                             class="absolute top-3 right-3 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm hover:bg-white transition duration-300 hover:text-brand"
-                            (click)="$event.stopPropagation(); removeFavorite(movie.id)">
-                            <i class="fa-heart fa-solid text-xl text-brand"></i>
+                            (click)="$event.stopPropagation(); openConfirmModal(movie.id)">
+                            <i class="fa-heart-circle-minus fa-solid text-xl text-dark"></i>
                         </button>
 
                         <!-- Imagem -->
@@ -72,14 +69,34 @@
             <!-- Se não houver favoritos -->
             <ng-template #noFavorites>
                 <div class="col-span-full bg-zinc-900 rounded-lg text-center text-zinc-400 py-32 lg:py-20 px-6">
-                    Você ainda não adicionou nenhum filme como favorito. Veja nossa <a routerLink="/categorias"
-                        class="text-red-900 underline underline-offset-4">lista
-                        completa</a> e selecione
-                    seus favoritos!
+                    Você ainda não adicionou nenhum filme como favorito.
+                    Veja nossa
+                    <a routerLink="/categorias" class="text-red-900 underline underline-offset-4">lista completa</a>
+                    e selecione seus favoritos!
                 </div>
             </ng-template>
         </div>
-
-
     </div>
+
+    <!-- Modal de confirmação -->
+    <div *ngIf="isModalOpen()" (click)="cancelRemove()"
+        class="fixed inset-0 bg-black/85 backdrop-blur-sm shadow-xl flex items-center justify-center z-[100] px-3">
+        <div class="bg-dark text-white rounded-xl p-6 w-full max-w-md shadow-xl animate-fadeIn">
+            <h3 class="text-xl font-bold mb-4">Remover dos favoritos?</h3>
+            <p class="text-zinc-300 mb-6">
+                Tem certeza que deseja remover este filme da sua lista de favoritos?
+            </p>
+
+            <div class="flex justify-end gap-3">
+                <button class="flex-1 px-4 py-2 rounded bg-zinc-800 hover:bg-zinc-700 transition"
+                    (click)="cancelRemove()">
+                    Cancelar
+                </button>
+                <button class="flex-1 px-4 py-2 rounded bg-brand hover:bg-red-800 transition" (click)="confirmRemove()">
+                    Remover
+                </button>
+            </div>
+        </div>
+    </div>
+
 </main>
