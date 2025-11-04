@@ -104,9 +104,9 @@
                     </button>
                     <button type="button" (click)="toggleFavorite(banners[activeIndex])"
                         class="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm hover:bg-white transition duration-300 hover:text-brand">
-                        <i class="fa-heart fa-solid text-xl transition-colors duration-300" [ngClass]="{
-                            'text-brand': favoritesService.isFavorite(banners[activeIndex].id),
-                            'text-dark': !favoritesService.isFavorite(banners[activeIndex].id)
+                        <i class="fa-solid text-xl transition-colors duration-300" [ngClass]="{
+                            'fa-heart text-brand': favoritesService.isFavorite(banners[activeIndex].id),
+                            'fa-heart-circle-plus text-zinc-900': !favoritesService.isFavorite(banners[activeIndex].id)
                         }"></i>
                     </button>
                     <button
