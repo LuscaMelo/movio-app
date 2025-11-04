@@ -93,6 +93,17 @@ export class FavoritesService {
     this.updateState([]);
   }
 
+  /** Retorna um Observable com o total de favoritos */
+  get favoritesCount$(): Observable<number> {
+    return this.favorites$.pipe(map(list => list.length));
+  }
+
+  /** Retorna o total de favoritos de forma síncrona */
+  getFavoritesCountSnapshot(): number {
+    return this.getFavoritesSnapshot().length;
+  }
+
+
   /** --------- Helpers privados --------- */
 
   /** Lê os favoritos do localStorage */

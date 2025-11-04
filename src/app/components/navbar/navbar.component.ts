@@ -1,9 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, computed, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { FormsModule } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +21,13 @@ export class NavbarComponent implements OnInit {
   searchQuery = '';
   searchResults: any[] = [];
   isSearching = false;
+  private favoritesService = inject(FavoritesService);
+
+  // Signal reativo do service
+  favoritesSignal = toSignal(this.favoritesService.favorites$, { initialValue: [] });
+
+  // Contagem de favoritos
+  favoritesCount = computed(() => this.favoritesSignal().length);
 
   constructor(private tmdbService: TmdbService, private router: Router) {}
 

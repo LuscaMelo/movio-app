@@ -46,8 +46,14 @@
             <div class="flex items-center gap-4 relative">
                 <div class="flex items-center gap-3">
                     <!-- Favoritos -->
-                    <a routerLink="/favoritos">
+                    <a routerLink="/favoritos" class="relative inline-block">
                         <i class="fa-solid fa-heart hover:text-brand duration-300 cursor-pointer text-xl"></i>
+
+                        <!-- Badge -->
+                        <span *ngIf="favoritesCount() > 0"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                            {{ favoritesCount() }}
+                        </span>
                     </a>
 
                     <!-- Input desktop -->
