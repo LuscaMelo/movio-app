@@ -110,6 +110,34 @@
             </div>
         </div>
 
+        <div class="pt-16">
+            <div class="mb-10 text-white border-l-4 border-brand px-3">
+                <h2 class="text-2xl xl:text-3xl font-bold mb-2">Estúdios de produção</h2>
+                <p class="text-base lg:text-lg">Estúdios responsáveis pela criação e distribuição deste filme</p>
+            </div>
+
+            <!-- Grade de estúdios -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
+                <div *ngFor="let studio of movie.production_companies"
+                    class="flex flex-col items-center justify-center gap-2 bg-zinc-900/90 px-4 py-5 rounded-lg min-h-[100px] transition hover:bg-zinc-800/60">
+                    <img *ngIf="studio.logo_path" [src]="'https://image.tmdb.org/t/p/w154' + studio.logo_path"
+                        alt="{{ studio.name }}" class="h-8 object-contain" />
+                    <span class="text-sm text-zinc-300 text-center">{{ studio.name }}</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="lg:mb-8">
+            <app-cast-slider [cast]="actors" [isLoading]="!actors.length"></app-cast-slider>
+        </div>
+
+        <div class="mb-10">
+            <app-movie-slider [movies]="recommendedMovies" [isLoading]="isLoadingRecommendations"
+                [title]="'Filmes recomendados'"
+                [subtitle]="'Outros títulos que você pode gostar com base neste filme'"></app-movie-slider>
+        </div>
+
         } @else {
 
         <div class="text-center text-zinc-500 py-20">
@@ -117,6 +145,7 @@
         </div>
         }
     </div>
+
 
     <!-- Modal do trailer -->
     <app-trailer-modal [visible]="showTrailer" [trailerUrl]="trailerUrl" (close)="closeTrailer()">

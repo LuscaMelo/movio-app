@@ -1,0 +1,66 @@
+<div class="relative max-w-[1500px] px-3 mx-auto pt-16">
+    <div class="mb-10 text-white border-l-4 border-brand px-3">
+        <h2 class="text-2xl xl:text-3xl font-bold mb-2">{{ title }}</h2>
+        <p class="text-base lg:text-lg">Os atores que deram vida a esta história</p>
+    </div>
+
+    <!-- Skeleton Loader -->
+    <div *ngIf="isLoading" class="flex gap-4 overflow-x-auto flex-nowrap no-scrollbar px-1">
+        <div *ngFor="let sk of skeletons"
+            class="min-w-[120px] h-[160px] rounded-full shrink-0 bg-zinc-800 animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900">
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div *ngIf="!isLoading" class="relative">
+        <!-- Gradiente esquerda -->
+        <div class="pointer-events-none absolute top-0 left-[-2px] w-[100px] lg:w-[350px] h-full z-[9] hidden lg:flex"
+            [ngClass]="{ 'bg-gradient-to-l from-transparent to-dark': !isAtStart }">
+        </div>
+
+        <!-- Gradiente direita -->
+        <div class="pointer-events-none absolute top-0 right-[-2px] w-[100px] lg:w-[350px] h-full z-[9]"
+            [ngClass]="{ 'bg-gradient-to-r from-transparent to-dark': !isAtEnd }">
+        </div>
+
+        <!-- Slides -->
+        <div #sliderRef class="flex overflow-x-auto gap-3 scroll-smooth no-scrollbar snap-x snap-mandatory"
+            (scroll)="onScroll()">
+
+            <div *ngFor="let actor of cast" class="snap-start min-w-[130px] text-center shrink-0 group">
+
+                <div
+                    class="w-[120px] lg:w-[180px] h-[120px] lg:h-[180px] mx-auto rounded-full overflow-hidden transition-all duration-300">
+                    <img [src]="'https://image.tmdb.org/t/p/w200' + actor.profile_path" [alt]="actor.name"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                </div>
+
+                <p class="text-sm font-medium mt-3 truncate">{{ actor.name }}</p>
+                <p class="text-xs text-zinc-400 truncate">{{ actor.character }}</p>
+            </div>
+        </div>
+
+    </div>
+    <!-- Navegação -->
+    <div class="mt-6 w-full flex justify-start">
+        <div class="flex gap-2">
+            <!-- Botão Esquerda -->
+            <button (click)="scrollLeft()" [disabled]="isAtStart"
+                class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <!-- Botão Direita -->
+            <button (click)="scrollRight()" [disabled]="isAtEnd"
+                class="bg-zinc-100/10 hover:bg-zinc-100/30 backdrop-blur-sm text-white p-3 rounded-full transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

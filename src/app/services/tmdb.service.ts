@@ -191,6 +191,10 @@ export class TmdbService {
     );
   }
 
+  getMovieRecommendations(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/movie/${id}/recommendations?api_key=${this.apiKey}&language=pt-BR`);
+  }
+
   // Helper para evitar repetição
   private fetchMovies(endpoint: string, page: number): Observable<TMDBResponse> {
     const params = new HttpParams()

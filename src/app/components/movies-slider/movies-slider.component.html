@@ -13,15 +13,14 @@
 
     <!-- Slider -->
     <div *ngIf="!isLoading" class="relative">
-        <!-- Gradiente à esquerda -->
-        <div class="pointer-events-none absolute top-0 left-0 w-[100px] lg:w-[150px] h-full z-[9] hidden lg:flex"
-            [ngClass]="{ 'bg-gradient-to-l from-transparent to-black/70': !isAtStart }"
-            style="mix-blend-mode: multiply;">
+        <!-- Gradiente esquerda -->
+        <div class="pointer-events-none absolute top-0 left-[-2px] w-[100px] lg:w-[350px] h-full z-[9] hidden lg:flex"
+            [ngClass]="{ 'bg-gradient-to-l from-transparent to-dark': !isAtStart }">
         </div>
 
-        <!-- Gradiente à direita -->
-        <div class="pointer-events-none absolute top-0 right-0 w-[100px] lg:w-[150px] h-full z-[9]"
-            [ngClass]="{ 'bg-gradient-to-r from-transparent to-black/70': !isAtEnd }" style="mix-blend-mode: multiply;">
+        <!-- Gradiente direita -->
+        <div class="pointer-events-none absolute top-0 right-[-2px] w-[100px] lg:w-[350px] h-full z-[9]"
+            [ngClass]="{ 'bg-gradient-to-r from-transparent to-dark': !isAtEnd }">
         </div>
 
         <!-- Container de slides -->
@@ -87,8 +86,9 @@
                 </button>
             </div>
 
-            <div class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300">
-                <a routerLink={{link}} class="lg:text-lg font-semibold">Ver todos</a>
+            <div *ngIf="link"
+                class="flex items-center gap-2 text-zinc-300 cursor-pointer hover:text-brand duration-300">
+                <a [routerLink]="link" class="lg:text-lg font-semibold">Ver todos</a>
                 <i class="fa-solid fa-arrow-right-long text-xl mt-1"></i>
             </div>
         </div>
