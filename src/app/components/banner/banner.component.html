@@ -1,4 +1,5 @@
-<div class="relative w-full 2xl:h-[800px] md:h-[680px] h-screen overflow-hidden">
+<div class="relative w-full 2xl:h-[800px] md:h-[680px] h-screen overflow-hidden" (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)">
   <!-- Skeleton -->
   <div *ngIf="!imageLoaded" class="absolute inset-0 bg-zinc-900 overflow-hidden">
     <div

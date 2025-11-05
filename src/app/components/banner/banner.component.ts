@@ -38,6 +38,10 @@ export class BannerComponent implements OnInit {
   showPopup = false;
   popupMessage = '';
 
+  // Touch
+  touchStartX = 0;
+  touchEndX = 0;
+
   constructor(
     private tmdb: TmdbService,
     private router: Router,
@@ -190,4 +194,29 @@ export class BannerComponent implements OnInit {
 
     this.favoritesService.toggleFavorite(favorite);
   }
+
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipeGesture();
+  }
+
+  private handleSwipeGesture() {
+    const swipeDistance = this.touchStartX - this.touchEndX;
+    if (Math.abs(swipeDistance) < 50) return;
+
+    this.imageLoaded = false;
+
+    if (swipeDistance > 0) {
+      this.nextBanner();
+    } else {
+      this.prevBanner();
+    }
+
+    setTimeout(() => (this.imageLoaded = true), 150);
+  }
+  
 }
